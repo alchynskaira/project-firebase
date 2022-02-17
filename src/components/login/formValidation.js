@@ -1,4 +1,4 @@
-// import {validEmail, validPassword} from "./regex";
+ import {validEmail, validPassword} from "./regex";
 
 const isValidLength = (value, minLength, maxLength) => value.length < minLength || value.length > maxLength;
 
@@ -6,7 +6,14 @@ const isValidLength = (value, minLength, maxLength) => value.length < minLength 
 const createMaxMinLengthError = (fieldName, min, max) =>
     `Form ${fieldName} should be from ${min} to ${max} letters`;
 
+
+
  export const formValidationLogin = (value, fieldName) => {
+     const email = "email";
+     const password = "password";
+     const validLength = isValidLength(value, 1, 15);
+     const regexEmail = !validEmail.test(value);
+     const regexPassword = !validPassword.test(value);
 
     const errors = {
         email: {
@@ -19,21 +26,25 @@ const createMaxMinLengthError = (fieldName, min, max) =>
         }
     };
 
-    if (fieldName === "email" && isValidLength(value, 1, 15)) {
+    if (fieldName === email && validLength && regexEmail) {
 
         errors.email.text = createMaxMinLengthError("email", 6, 20);
         errors.email.valid = false;
+
     } else {
-        errors.email.text = "";
+
         errors.email.valid = true;
+
     }
-    if (fieldName === "password" && isValidLength(value, 1, 12)) {
+    if (fieldName === password && validLength && regexPassword) {
 
         errors.password.text = createMaxMinLengthError("password", 6, 20);
         errors.password.valid = false;
+
     } else {
-        errors.password.text = "";
+
         errors.password.valid = true;
+
     }
 
     return errors;

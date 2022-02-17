@@ -1,0 +1,23 @@
+.logout-btn.logout  {
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.navLink {
+  margin-right: 60px;
+    margin-left: 30px;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+
+
+.tool-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
