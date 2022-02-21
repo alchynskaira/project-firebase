@@ -2,7 +2,10 @@ import React, { useState} from "react";
 import {TextField, Button} from "@mui/material";
 import {formValidationLogin} from "./formValidation";
 import {useNavigate} from "react-router-dom";
+import {auth} from "../../index";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import  "./Login.css";
+import {saveUser} from "../helpers/saveUser";
 
 
 
@@ -20,6 +23,8 @@ export function LoginForm() {
             text: ""
         }});
 
+
+
     const handleEmailChange = (e) => {
         setEmailInput(e.target.value);
         setErrors(formValidationLogin(e.target.value, "email"));
@@ -35,26 +40,25 @@ export function LoginForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const hardcodedCred = {
-            email: "email@email.com",
-            password: "password123",
-        };
-        if (emailInput === hardcodedCred.email && passwordInput === hardcodedCred.password) {
-            localStorage.setItem("isAuthenticated", JSON.stringify(true));
+            signInWithEmailAndPassword(auth, emailInput, passwordInput)
+                .then((response) => {
+                    const { user } = response;
 
-            navigate("/home");
-
-        } else {
-            alert("Wrong email or password combination");
-        }
+                    saveUser(user, navigate);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
         resetForm();
     };
+
 
     const resetForm = () => {
         setEmailInput("");
         setPasswordInput("");
     };
+
 
     return (
         <>
@@ -95,6 +99,9 @@ export function LoginForm() {
                         <Button variant="contained"  type="submit" className="btn-login btn">
                             Submit
                         </Button>
+                        {/*<Button variant="contained"  type="submit" className="btn-login btn">*/}
+                        {/*    Sign up*/}
+                        {/*</Button>*/}
                     </div>
                 </form>
             </div>

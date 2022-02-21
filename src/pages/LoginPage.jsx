@@ -1,10 +1,10 @@
 import React from "react";
 import {LoginForm} from "../components/login/LoginForm";
-import {localStorageGetUserState} from "../components/isAuthenticated";
+import {getUserState} from "../components/isAuthenticated";
 
 const LoginPage = () => {
 
-    const isAuthenticated = localStorageGetUserState();
+    const isAuthenticated = getUserState();
 
     return (
         <> {!isAuthenticated &&  <LoginForm/>}

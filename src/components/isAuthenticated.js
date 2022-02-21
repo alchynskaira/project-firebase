@@ -1,6 +1,13 @@
+import { getAuth } from "firebase/auth";
+ export const getUserState = ( )=> {
 
- export const localStorageGetUserState = ( )=> {
-   return  JSON.parse(localStorage.getItem("isAuthenticated"));
+     const auth = getAuth();
+
+     const user = auth.currentUser;
+
+
+     return !!user;
+
 
 };
 

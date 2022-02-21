@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-import {localStorageGetUserState} from "./isAuthenticated";
+import {getUserState} from "./isAuthenticated";
 
 export const PrivateRoute = ({children}) => {
-    const isAuthenticated = localStorageGetUserState();
+    const isAuthenticated = getUserState();
 
     return isAuthenticated ? children : <Navigate to="/login" />;
 };

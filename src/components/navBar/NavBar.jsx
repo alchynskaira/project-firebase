@@ -5,21 +5,27 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import {NavLink} from "react-router-dom";
-
-
 import "./NavBar.css";
 import React from "react";
-import { localStorageGetUserState} from "../isAuthenticated";
+import { getUserState} from "../isAuthenticated";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 
 export  function NavBar() {
      const navigate = useNavigate();
-     const isAuthenticated =  localStorageGetUserState();
+     const isAuthenticated =  getUserState();
 
      const handleLogoutClick = () => {
-         localStorageGetUserState(false) && localStorage.removeItem("isAuthenticated");
-         navigate("/login");
+         const auth = getAuth();
+         signOut(auth).then(() => {
+             getUserState(false) && localStorage.clear();
+             navigate("/login");
+         }).catch((error) => {
+             console.log(error);
+         });
+
+
      };
 
     return (
@@ -46,6 +52,9 @@ export  function NavBar() {
                     )}
                     {isAuthenticated && (
                     <Button onClick={handleLogoutClick} color="inherit" className="logout-btn logout">Log out</Button>
+                    )}
+                    {!isAuthenticated && (
+                        <Button onClick={handleLogoutClick} color="inherit" className="logout-btn logout">Sign up</Button>
                     )}
                 </Toolbar>
             </AppBar>
