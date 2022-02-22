@@ -4,9 +4,12 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 import {NavBar} from "./components/navBar/NavBar";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import RegistrationPage from "./pages/RegistrationPage";
 import{PrivateRoute} from "./components/routs";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {saveUser} from "./components/helpers/saveUser";
+
+
 
 
 
@@ -18,7 +21,6 @@ function App() {
     useEffect(()=> {
         const auth = getAuth();
 
-        console.log("123");
         onAuthStateChanged(auth, (user) => {
             if (user) {
                saveUser(user, navigate);
@@ -29,15 +31,21 @@ function App() {
     });
 
 }, []);
+
   return (
     <div className="App">
+
       <Container >
+
           <NavBar/>
       <Routes>
           <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>} />
+          <Route path="register" element={<RegistrationPage/>}/>
            <Route path="login" element={ <LoginPage/>}/>
       </Routes>
+
       </Container>
+
     </div>
   );
 }

@@ -5,10 +5,7 @@ import { getAuth } from "firebase/auth";
 
      const user = auth.currentUser;
 
-
      return !!user;
-
-
 };
 
 

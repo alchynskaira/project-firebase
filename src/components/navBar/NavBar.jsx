@@ -5,22 +5,26 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import {NavLink} from "react-router-dom";
-import "./NavBar.css";
-import React from "react";
+import React, {useState} from "react";
 import { getUserState} from "../isAuthenticated";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import "./NavBar.css";
 
 
 export  function NavBar() {
      const navigate = useNavigate();
      const isAuthenticated =  getUserState();
 
+    const [isLoading, setIsLoading] = useState(false);
+
      const handleLogoutClick = () => {
          const auth = getAuth();
          signOut(auth).then(() => {
              getUserState(false) && localStorage.clear();
+
              navigate("/login");
+             setIsLoading(true);
          }).catch((error) => {
              console.log(error);
          });
@@ -40,9 +44,14 @@ export  function NavBar() {
                         sx={{ mr: 2 }}
                     >
                     </IconButton>
-                    {isAuthenticated && (
+                    {isAuthenticated && isLoading &&  (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
+                        </NavLink>
+                    )}
+                    { (
+                        <NavLink   to="/register" className="navLink">
+                            Sign up
                         </NavLink>
                     )}
                     {!isAuthenticated && (
@@ -53,9 +62,7 @@ export  function NavBar() {
                     {isAuthenticated && (
                     <Button onClick={handleLogoutClick} color="inherit" className="logout-btn logout">Log out</Button>
                     )}
-                    {!isAuthenticated && (
-                        <Button onClick={handleLogoutClick} color="inherit" className="logout-btn logout">Sign up</Button>
-                    )}
+
                 </Toolbar>
             </AppBar>
         </Box>

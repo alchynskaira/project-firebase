@@ -4,6 +4,7 @@ import {formValidationLogin} from "./formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
 import {signInWithEmailAndPassword} from "firebase/auth";
+//import PersonIcon from "@mui/icons-material/Person";
 import  "./Login.css";
 import {saveUser} from "../helpers/saveUser";
 
@@ -71,6 +72,7 @@ export function LoginForm() {
                     <h2 className="title">Log in</h2>
                     <div className="flex">
                         <div className="form-group">
+                            <label className="login-label">Email
                             <TextField fullWidth
                                 type="email"
                                 className="form-control"
@@ -81,9 +83,11 @@ export function LoginForm() {
                                  onChange={handleEmailChange}
                                        required
                             />
+                            </label>
                         </div>
                         {!errors.email.valid &&   <p className="error-log">{errors.email.text}</p>}
                         <div className="form-group">
+                            <label className="login-label">Password
                             <TextField fullWidth
                                 type="password"
                                 autoComplete="new-password"
@@ -94,14 +98,19 @@ export function LoginForm() {
                                  onChange={handlePasswordChange}
                                        required
                             />
+                            </label>
                         </div>
                         { !errors.password.valid &&  <p className="error-log">{errors.password.text}</p>}
+
                         <Button variant="contained"  type="submit" className="btn-login btn">
                             Submit
                         </Button>
-                        {/*<Button variant="contained"  type="submit" className="btn-login btn">*/}
-                        {/*    Sign up*/}
-                        {/*</Button>*/}
+                        <div className="register-box">
+                        <a href="/register" variant="contained"  type="submit" className="link-signup btn">
+                            Sign up
+                            {/*< PersonIcon className="user-icon"/>*/}
+                        </a>
+                        </div>
                     </div>
                 </form>
             </div>

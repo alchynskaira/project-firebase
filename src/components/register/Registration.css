@@ -1,0 +1,38 @@
+.title {
+    text-align: center;
+    font-size: 40px;
+}
+
+.register-form {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    width: 400px;
+    height: 580px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.form-group {
+    padding: 10px;
+    margin-bottom: 20px;
+    outline: none;
+
+}
+.btn-signup.btn{
+    margin-left: 30%;
+    width: 150px;
+    margin-top: 20px;
+}
+
+.error-log {
+    margin-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    font-size: small;
+    font-weight: 400;
+    font-style: normal;
+    color: tomato;
+    margin-left: 10px;
+}

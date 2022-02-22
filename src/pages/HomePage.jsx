@@ -8,8 +8,7 @@ const HomePage = () => {
     return (
         <>
             HomePage
-
-
+            
         </>
     );
 };

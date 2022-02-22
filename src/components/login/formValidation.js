@@ -50,3 +50,27 @@ const createMaxMinLengthError = (fieldName, min, max) =>
     return errors;
 };
 
+ export const signupValidation =(password, confirmPassword) => {
+     console.log(password, confirmPassword);
+
+
+     const errors = {
+         confirmPassword: {
+             valid:true,
+             text: ""
+         }
+     };
+
+     if (password === confirmPassword ) {
+         errors.confirmPassword.text = "";
+         errors.confirmPassword.valid = true;
+
+     } else {
+
+         errors.confirmPassword.text = "Password doesn't match";
+         errors.confirmPassword.valid = false;
+     }
+
+return errors;
+
+ };
