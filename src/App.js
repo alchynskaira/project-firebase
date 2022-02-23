@@ -8,15 +8,12 @@ import RegistrationPage from "./pages/RegistrationPage";
 import{PrivateRoute} from "./components/routs";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {saveUser} from "./components/helpers/saveUser";
-
-
-
-
-
+// import CircularIndeterminate from "./components/helpers/loader/LoaderSpinner";
 
 
 function App() {
     let navigate = useNavigate();
+    // const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
         const auth = getAuth();
@@ -27,6 +24,7 @@ function App() {
 
             } else {
                 console.log("user is not logged in");
+
             }
     });
 
@@ -36,12 +34,13 @@ function App() {
     <div className="App">
 
       <Container >
+          {/*{!isLoading && <CircularIndeterminate />}*/}
 
           <NavBar/>
       <Routes>
-          <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>} />
+          <Route path="login" element={ <LoginPage/>}/>
           <Route path="register" element={<RegistrationPage/>}/>
-           <Route path="login" element={ <LoginPage/>}/>
+          <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>} />
       </Routes>
 
       </Container>

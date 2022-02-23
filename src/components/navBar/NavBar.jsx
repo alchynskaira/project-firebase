@@ -21,8 +21,7 @@ export  function NavBar() {
      const handleLogoutClick = () => {
          const auth = getAuth();
          signOut(auth).then(() => {
-             getUserState(false) && localStorage.clear();
-
+              localStorage.clear();
              navigate("/login");
              setIsLoading(true);
          }).catch((error) => {
@@ -44,22 +43,23 @@ export  function NavBar() {
                         sx={{ mr: 2 }}
                     >
                     </IconButton>
+
                     {isAuthenticated && isLoading &&  (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
                         </NavLink>
                     )}
-                    { (
+                    {!isAuthenticated  && isLoading &&  (
                         <NavLink   to="/register" className="navLink">
                             Sign up
                         </NavLink>
                     )}
-                    {!isAuthenticated && (
+                    {!isAuthenticated &&  (
                         <NavLink to="/login" className="navLink" >
                             Login
                         </NavLink>
                     )}
-                    {isAuthenticated && (
+                    {isAuthenticated &&  (
                     <Button onClick={handleLogoutClick} color="inherit" className="logout-btn logout">Log out</Button>
                     )}
 

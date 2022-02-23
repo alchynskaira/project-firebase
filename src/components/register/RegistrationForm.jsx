@@ -4,18 +4,18 @@ import {formValidationLogin, signupValidation} from "../login/formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
 import {createUserWithEmailAndPassword} from "firebase/auth";
-import {FlashMessage} from "../../notification";
 import  "./Registration.css";
 import {saveUser} from "../helpers/saveUser";
-//import Alert from "@mui/material/Alert";
+import {FlashMessage} from "../helpers/alert/FlashMessage";
 
 let pass = "";
 
 export function RegistrationForm() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
     const [emailValue, setEmailValue] = useState( "");
     const [passwordValue, setPasswordValue] = useState("");
     const [confirmValue, setConfirmValue] = useState("");
+
     const [errors, setErrors] = useState({
         email: {
             valid: true,
@@ -32,9 +32,9 @@ export function RegistrationForm() {
             text: ""
         }
     });
-    //const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [message, setMessage] = useState("");
+
 
 
     const setEmail = (e) => {
@@ -64,17 +64,17 @@ export function RegistrationForm() {
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then((response) => {
                 const { user } = response;
-                setMessage("User has been successfully signed up!");
-                setSuccess(true);
 
                 saveUser(user, navigate);
+
             })
             .catch((error) => {
                 console.log(error);
             });
-
+        setSuccess(true);
+        setOpen(true);
         resetForm();
-        setSuccess(false);
+
     };
 
 
@@ -89,6 +89,8 @@ export function RegistrationForm() {
     return (
         <>
             <div className="login-page">
+                {success && open &&  <FlashMessage />}
+
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
@@ -148,7 +150,7 @@ export function RegistrationForm() {
 
                     </div>
                 </form>
-                {success ? <FlashMessage message={message}/> : ""}
+
             </div>
         </>
     );

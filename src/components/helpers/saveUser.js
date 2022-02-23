@@ -1,4 +1,4 @@
-export const saveUser = (user, navigate)=> {
+export const saveUser = (user, navigate) => {
 
     localStorage.setItem("token", JSON.stringify(user.accessToken));
     const userData = {
