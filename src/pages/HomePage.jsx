@@ -11,11 +11,6 @@ const HomePage = () => {
     return (
         <>
 
-        <>
-
-            HomePage
-            
-        </>
         </>
     );
 };

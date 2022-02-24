@@ -8,6 +8,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import{PrivateRoute} from "./components/routs";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {saveUser} from "./components/helpers/saveUser";
+import ProfilePage from "./pages/Profile";
 // import CircularIndeterminate from "./components/helpers/loader/LoaderSpinner";
 
 
@@ -24,7 +25,6 @@ function App() {
 
             } else {
                 console.log("user is not logged in");
-
             }
     });
 
@@ -40,6 +40,7 @@ function App() {
       <Routes>
           <Route path="login" element={ <LoginPage/>}/>
           <Route path="register" element={<RegistrationPage/>}/>
+          <Route path="profile" element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
           <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>} />
       </Routes>
 

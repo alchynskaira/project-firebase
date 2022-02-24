@@ -1,6 +1,10 @@
 .logout-btn.logout  {
     font-size: 16px;
     font-weight: 700;
+    width: 30px;
+    height: 30px;
+    margin-left:auto;
+
 }
 
 .navLink {
@@ -11,12 +15,16 @@
     font-weight: 700;
 }
 
-
+.navLink.icon-profile{
+    width: 30px;
+    height: 30px;
+}
 
 
 .tool-bar {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
+    vertical-align: baseline;
 }

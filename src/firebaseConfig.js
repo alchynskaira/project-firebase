@@ -1,3 +1,8 @@
+// import firestore from "firebase/compat";
+ //import {getFirestore} from "firebase/firestore";
+
+
+
  export const firebaseConfig = {
     apiKey: "AIzaSyCmOWGeoETMivcI7OnwjcxoR3oqzHDfxp4",
     authDomain: "auth-react-c2f06.firebaseapp.com",
@@ -5,4 +10,8 @@
     storageBucket: "auth-react-c2f06.appspot.com" ,
     messagingSenderId:"197905796861" ,
     appId: "1:197905796861:web:cfb21a08286cc1ed6a3894"
+
 };
+
+//export  default getFirestore();
+
