@@ -1,11 +1,11 @@
 
 import React from "react";
-import RecipeReviewCard from "../components/profile/Profile";
+import UserCard from "../components/profile/Profile";
 
 const ProfilePage = () => {
 
     return (
-       <RecipeReviewCard />
+       <UserCard />
     );
 };
 

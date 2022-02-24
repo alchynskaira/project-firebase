@@ -1,5 +1,9 @@
-// import firestore from "firebase/compat";
- //import {getFirestore} from "firebase/firestore";
+
+ import "firebase/compat/firestore";
+ import "firebase/compat/auth";
+ import firebase from "firebase/compat/app";
+
+
 
 
 
@@ -12,6 +16,9 @@
     appId: "1:197905796861:web:cfb21a08286cc1ed6a3894"
 
 };
-
-//export  default getFirestore();
+const firebaseApp =firebase.initializeApp(firebaseConfig);
+  const db= firebaseApp.firestore();
+  const auth = firebase.auth();
+ console.log(db, auth)
+export {db, auth};
 
