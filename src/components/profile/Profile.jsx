@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
+import {Button} from "@material-ui/core";
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
@@ -18,76 +18,143 @@ import {onSnapshot, collection, getFirestore} from "firebase/firestore";
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-            margin: "32px auto"
+             margin: "32px auto",
+            // display: "flex",
+            // alignItems: "center",
+            // flexDirection: "column",
         },
+        bcgImage: {
+            opacity: "0.10",
+            zIndex: "0",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "centre",
+
+        },
+        content: {
+            backgroundImage: "url(https://picsum.photos/500/194)",
+            width:"100%",
+            height: "100%",
+            color: "white",
+            backgroundRepeat: "no-repeat",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+        },
+        data: {
+            zIndex: "2",
+            color: "darkgray",
+            fontSize: "18px",
+            fontWeight: "500",
+        },
+        headerBox: {
+            display: "flex",
+
+        },
+        title: {
+         fontSize: "18px",
+         fontWeight: "500",
+            color: "white",
+        },
+        profileButton:{
+            marginLeft: '90px',
+            backgroundColor:"white",
+
+        },
+        icons: {
+            color: "darkgray",
+
+        }
     })
 );
 
 export default function UserCard() {
     const classes = useStyles();
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState([]);
 
 
     useEffect(() => {
-        let users= [];
+        // let users= [];
+        // db.collection("user").onSnapshot(el => {
+        //     console.log(el, "el")
+        //     el.docs.forEach(user => {
+        //         console.log(user, "per")
+        //         users.push((user.data()))
+        //
+        //
+        //     })
+        //     setUser(user);
+        // })
+
+
         db.collection("user").onSnapshot(el => {
-            console.log(el, "el")
-            el.docs.forEach(per => {
-                console.log(per, "per")
-                users.push((per.data()))
+            el.docs.forEach(doc => {
+                setUser([...user, ...[doc.data()]]);
             })
-            })
-           setUsers(users);
+        })
     }, [])
 
-    console.log(users)
+//     const ageCount = () => {
+//     let todayDate = new Date();
+//         console.log(todayDate);
+//         let month = todayDate.getMonth() + 1;
+//         console.log(month);
+//         let date = todayDate.getDate()
+//         console.log(date);
+//     }
+// ageCount();
+
     return (
         <div>
-            {users && users.map(user => {
+            {user.map((el)=> {
                 return (
-                    <Card className={classes.card} sx={{maxWidth: 500}} key={user.id}>
+                    <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={el.id}>
+                        <div className={classes.content}>
                         <CardHeader
                             avatar={
                                 <Avatar
+                                    className="avatar"
                                     alt="Remy Sharp"
-                                    src={user.avatar}
-                                    sx={{width: 64, height: 64}}
+                                    src={el.avatar}
+                                    sx={{width: 68, height: 68}}
                                 />
-                            }
-                        />
 
-                        <CardMedia
-                            component="img"
-                            height="194"
-                            image="https://picsum.photos/500/194"
-                            alt="Paella dish"
+                            }
+
                         />
-                        <CardContent>
-                            <Typography>
-                               Name: {user.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                               Birthday:  {user.birthday}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                               Age: {user.age}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                               Profession: {user.profession}
-                            </Typography>
-                        </CardContent>
+                            <CardContent >
+                                <Typography variant="body2" color="text.secondary" className={classes.title}>
+                                    {el.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" className={classes.title}>
+                                    Profession: {el.profession}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" className={classes.title}>
+                                    Birthday: {el.birthday}
+                                </Typography>
+                            </CardContent>
+                        </div>
                         <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites">
+                            <IconButton aria-label="add to favorites" className={classes.icons}>
                                 <FavoriteIcon/>
                             </IconButton>
-                            <IconButton aria-label="mailto:email@email.com">
+                            <IconButton aria-label="mailto:email@email.com" className={classes.icons}>
                                 <EmailIcon/>
                             </IconButton>
+                            <Button variant="contained" size="small" className={classes.profileButton}>
+                                Update user
+                            </Button>
                         </CardActions>
+
                     </Card>
                 );
             })}
         </div>
+
     )
+
+
+
 
 }
