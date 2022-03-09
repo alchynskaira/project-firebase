@@ -2,21 +2,19 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {db} from "../../firebaseConfig";
+
+
+const INITIAL_FORM_VALUES = {
+    name: "",
+    birthday: "",
+    profession: "",
+}
+
 export function EditUserDataForm() {
-    const [name, setName] = useState("");
-    const [birthday, setBirthday] = useState("");
-    const [profession, setProfession] = useState("");
+    const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
 
-    const editName = (e) => {
-        setName(e.target.value)
-    }
-    const editBirthday = (e) => {
-        setBirthday(e.target.value);
-    }
 
-    const editProfession =(e) => {
-        setProfession(e.target.value)
-    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -37,16 +35,15 @@ export function EditUserDataForm() {
         //resetForm();
     }
 
-
-
-
-
-
+    const changeField = (field, value) => {
+        setFormValues({
+            ...formValues,
+            [field]:value,
+        });
+    }
 
     const resetForm = () => {
-        setName("");
-        setBirthday("");
-        setProfession("");
+        setFormValues(INITIAL_FORM_VALUES);
     };
     return (
         <>
@@ -67,8 +64,8 @@ export function EditUserDataForm() {
                                            className="form-control"
                                            id="name"
                                            placeholder="Edit your name"
-                                            value={name}
-                                            onChange={editName}
+                                            value={formValues.name}
+                                            onChange={(e)=> changeField("name", e.target.value)}
                                 />
                             </label>
                         </div>
@@ -81,8 +78,8 @@ export function EditUserDataForm() {
                                            className="form-control"
                                            id="birthday"
                                            placeholder="Edit the day of birth"
-                                            value={birthday}
-                                            onChange={editBirthday}
+                                            value={formValues.birthday}
+                                           onChange={(e)=> changeField("birthday", e.target.value)}
                                            required
                                 />
                             </label>
@@ -96,8 +93,8 @@ export function EditUserDataForm() {
                                            className="form-control"
                                            id="profession"
                                            placeholder="Edit your profession"
-                                            value={profession}
-                                            onChange={editProfession}
+                                            value={formValues.profession}
+                                           onChange={(e)=> changeField("profession", e.target.value)}
                                            required
                                 />
                             </label>

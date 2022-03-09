@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+import Modal from "../modal/Modal";
 import {getDatabase, ref, set} from "firebase/database";
 import {saveUser} from "../helpers/saveUser";
 import {db} from "../../firebaseConfig";
@@ -72,6 +73,9 @@ const useStyles = makeStyles((theme) =>
 export default function UserCard() {
     const classes = useStyles();
     const [user, setUser] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+
+
 
 
     useEffect(() => {
@@ -107,6 +111,7 @@ export default function UserCard() {
 
     return (
         <div>
+            { modalOpen && <Modal onClose={setModalOpen}/>}
             {user.map((el)=> {
                 return (
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={el.id}>
@@ -142,7 +147,7 @@ export default function UserCard() {
                             <IconButton aria-label="mailto:email@email.com" className={classes.icons}>
                                 <EmailIcon/>
                             </IconButton>
-                            <Button variant="contained" size="small" className={classes.profileButton}>
+                            <Button variant="contained" size="small" className={classes.profileButton} onClick={() => setModalOpen(true)}>
                                 Update user
                             </Button>
                         </CardActions>

@@ -1,6 +1,6 @@
 import React from "react";
 import {getUserState} from "../components/isAuthenticated";
-import {EditUserDataForm} from "../components/editUserInfo/EditUserData";
+
 
 
 
@@ -11,7 +11,7 @@ const HomePage = () => {
 
     return (
         <>
-            <EditUserDataForm/>
+
         </>
     );
 };
