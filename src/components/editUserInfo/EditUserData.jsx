@@ -2,6 +2,8 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {db} from "../../firebaseConfig";
+//import {formValidationLogin, profileValidationForm} from "../login/formValidation";
+
 
 
 const INITIAL_FORM_VALUES = {
@@ -12,27 +14,49 @@ const INITIAL_FORM_VALUES = {
 
 export function EditUserDataForm() {
     const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
+    const [errors, setErrors] = useState({name: {
+            valid: true,
+            text: ""
+        },
+        birthday: {
+            valid: true,
+            text: ""
+        },
+        profession: {
+            valid: true,
+            text: ""
+        }
+    });
+
+
+    const updateUser = (id, fieldName) => {
+        const userRef = db.collection("user").doc(id);
+        console.log(userRef, "userref");
+
+          userRef.update({
+            name: formValues.name,
+            birthday: formValues.birthday,
+            profession: formValues.profession,
+        })
+            .then(() => {
+                console.log("Document successfully updated!");
+
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
+
+    }
+
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+         updateUser()
 
-        const userRef = db.collection("user").doc("doc");
-        return userRef.update({
-            name: true,
-            birthday: true,
-            profession: true,
-        })
-            .then(() => {
-                console.log("Document successfully updated!");
-            })
-            .catch((error) => {
 
-                console.error("Error updating document: ", error);
-            });
 
-        //resetForm();
     }
 
     const changeField = (field, value) => {
@@ -40,6 +64,8 @@ export function EditUserDataForm() {
             ...formValues,
             [field]:value,
         });
+    // setErrors(profileValidationForm(field,value))
+
     }
 
     const resetForm = () => {
@@ -69,11 +95,11 @@ export function EditUserDataForm() {
                                 />
                             </label>
                         </div>
-
+                        {!errors.name && <p className="error">{errors.name}</p>}
                         <div className="form-group">
                             <label className="register-label">Birthday
                                 <TextField fullWidth
-                                           type="number"
+                                           type="text"
                                            autoComplete="off"
                                            className="form-control"
                                            id="birthday"
@@ -84,6 +110,7 @@ export function EditUserDataForm() {
                                 />
                             </label>
                         </div>
+                        {!errors.birthday && <p className="error">{errors.birthday}</p>}
                         <div className="form-group">
                             <label className="register-label">Profession
                                 <TextField fullWidth
@@ -99,6 +126,7 @@ export function EditUserDataForm() {
                                 />
                             </label>
                         </div>
+                        {!errors.profession && <p className="error">{errors.profession}</p>}
                         <Button variant="contained"   type="submit" className="btn-signup btn">
                             Submit
                         </Button>

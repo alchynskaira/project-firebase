@@ -51,9 +51,6 @@ const createMaxMinLengthError = (fieldName, min, max) =>
 };
 
  export const signupValidation =(password, confirmPassword) => {
-     console.log(password, confirmPassword);
-
-
      const errors = {
          confirmPassword: {
              valid:true,
@@ -74,3 +71,40 @@ const createMaxMinLengthError = (fieldName, min, max) =>
 return errors;
 
  };
+
+
+ // export const profileValidationForm =(fieldName,value)=> {
+ //     const name = "name";
+ //     const birthday = "birthday";
+ //     const profession = "profession";
+ //     const errors = {
+ //         name: {
+ //             valid: true,
+ //             text: ""
+ //         },
+ //         birthday: {
+ //             valid: true,
+ //             text: ""
+ //         },
+ //         profession: {
+ //             valid: true,
+ //             text: ""
+ //         },
+ //     };
+ //
+ //         if (fieldName === name && isValidLength(value.name, 2, 30)) {
+ //             errors.name.text = createMaxMinLengthError("name", 2, 30);
+ //             errors.name.valid = false;
+ //         }
+ //         if (fieldName === birthday && isValidLength(value.birthday, 2, 20)) {
+ //             errors.birthday.text = createMaxMinLengthError("birthday", 2, 20);
+ //             errors.birthday.valid = false;
+ //         }
+ //         if (fieldName === profession && isValidLength(value.profession, 2, 30)) {
+ //             errors.profession.text = createMaxMinLengthError("profession", 2, 30);
+ //             errors.profession.valid = false;
+ //         }
+ //
+ //         return errors;
+ //
+ // }
