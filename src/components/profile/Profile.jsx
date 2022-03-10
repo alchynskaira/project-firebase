@@ -11,18 +11,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import {getDatabase, ref, set} from "firebase/database";
-import {saveUser} from "../helpers/saveUser";
 import {db} from "../../firebaseConfig";
-import {onSnapshot, collection, getFirestore} from "firebase/firestore";
+
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
              margin: "32px auto",
-            // display: "flex",
-            // alignItems: "center",
-            // flexDirection: "column",
         },
         bcgImage: {
             opacity: "0.10",
@@ -79,40 +74,22 @@ export default function UserCard() {
 
 
     useEffect(() => {
-        // let users= [];
-        // db.collection("user").onSnapshot(el => {
-        //     console.log(el, "el")
-        //     el.docs.forEach(user => {
-        //         console.log(user, "per")
-        //         users.push((user.data()))
-        //
-        //
-        //     })
-        //     setUser(user);
-        // })
-
 
         db.collection("user").onSnapshot(el => {
             el.docs.forEach(doc => {
-                setUser([...user, ...[doc.data()]]);
+                setUser([...user, {...[doc.data()], id: doc.id}]);
+
             })
         })
     }, [])
 
-//     const ageCount = () => {
-//     let todayDate = new Date();
-//         console.log(todayDate);
-//         let month = todayDate.getMonth() + 1;
-//         console.log(month);
-//         let date = todayDate.getDate()
-//         console.log(date);
-//     }
-// ageCount();
+    console.log(user)
 
     return (
         <div>
             { modalOpen && <Modal onClose={setModalOpen}/>}
             {user.map((el)=> {
+                console.log(el)
                 return (
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={el.id}>
                         <div className={classes.content}>

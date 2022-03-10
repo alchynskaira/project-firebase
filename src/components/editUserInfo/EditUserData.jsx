@@ -1,9 +1,12 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, TextField} from "@mui/material";
-import {db} from "../../firebaseConfig";
-//import {formValidationLogin, profileValidationForm} from "../login/formValidation";
 
+//import { profileValidationForm} from "../login/formValidation";
+import {getDatabase, ref, set, update} from "firebase/database";
+import firebase from "firebase/compat/app";
+import {doc, setDoc} from "firebase/firestore";
+import {db} from "../../firebaseConfig";
 
 
 const INITIAL_FORM_VALUES = {
@@ -13,6 +16,7 @@ const INITIAL_FORM_VALUES = {
 }
 
 export function EditUserDataForm() {
+
     const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
     const [errors, setErrors] = useState({name: {
             valid: true,
@@ -29,33 +33,54 @@ export function EditUserDataForm() {
     });
 
 
-    const updateUser = (id, fieldName) => {
-        const userRef = db.collection("user").doc(id);
-        console.log(userRef, "userref");
 
-          userRef.update({
-            name: formValues.name,
-            birthday: formValues.birthday,
-            profession: formValues.profession,
-        })
-            .then(() => {
-                console.log("Document successfully updated!");
+    function updateUser() {
+        // db.collection("user").doc("nNKpHpEVaAWnGJt4Xjih").update({
+        //     name: formValues.name,
+        //     birthday: formValues.birthday,
+        //     profession: formValues.profession,
+        // })
 
-            })
-            .catch((error) => {
-                console.error("Error updating document: ", error);
-            });
+       // const db = getDatabase();
+        // update(ref( db,'user/' + "nNKpHpEVaAWnGJt4Xjih"), {
+        //     name: formValues.name,
+        //     birthday: formValues.birthday,
+        //     profession: formValues.profession,
+        // })
+        //      .then(() => {
+        //                 console.log("Document successfully updated!");
+        //
+        //             })
+        //             .catch((error) => {
+        //                 console.error("Error updating document: ", error);
+        //             });
+
 
     }
+
+
+    // const updateUser = (id) => {
+    //      .set(ref(db,'user/' + id)({
+    //         name: formValues.name,
+    //         birthday: formValues.birthday,
+    //         profession: formValues.profession,
+    //     })
+    //         .then(() => {
+    //             console.log("Document successfully updated!");
+    //
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error updating document: ", error);
+    //         });
+    //     };
+
 
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-         updateUser()
-
-
+        updateUser()
 
     }
 
@@ -76,7 +101,7 @@ export function EditUserDataForm() {
             <div className="login-page">
                 <form
                     autoComplete="off"
-                    onSubmit={handleSubmit}
+                    onSubmit={() => handleSubmit()}
 
                     className="register-form"
                 >
@@ -130,7 +155,6 @@ export function EditUserDataForm() {
                         <Button variant="contained"   type="submit" className="btn-signup btn">
                             Submit
                         </Button>
-
                     </div>
                 </form>
 
