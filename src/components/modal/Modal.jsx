@@ -33,7 +33,7 @@ export default function Modal ({onClose}) {
            <div className="modal-content">
                <Button   type="button" className="button-close" onClick={() => onClose(false)}>x
                </Button>
-               <EditUserDataForm/>
+               <EditUserDataForm onClose={onClose}/>
            </div>
        </div>,
        modalRoot

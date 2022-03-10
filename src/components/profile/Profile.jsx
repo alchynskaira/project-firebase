@@ -77,7 +77,7 @@ export default function UserCard() {
 
         db.collection("user").onSnapshot(el => {
             el.docs.forEach(doc => {
-                setUser([...user, {...[doc.data()], id: doc.id}]);
+                setUser([...user, ...[doc.data()]]);
 
             })
         })
@@ -89,7 +89,7 @@ export default function UserCard() {
         <div>
             { modalOpen && <Modal onClose={setModalOpen}/>}
             {user.map((el)=> {
-                console.log(el)
+                //el = el[0]
                 return (
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={el.id}>
                         <div className={classes.content}>

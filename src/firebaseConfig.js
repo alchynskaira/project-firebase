@@ -2,6 +2,7 @@
  import "firebase/compat/firestore";
  import "firebase/compat/auth";
  import firebase from "firebase/compat/app";
+ import {getDatabase} from "firebase/database";
 
 
 
@@ -19,6 +20,7 @@
 const firebaseApp =firebase.initializeApp(firebaseConfig);
   const db= firebaseApp.firestore();
   const auth = firebase.auth();
+
 
 export {db, auth};
 
