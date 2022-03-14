@@ -38,14 +38,15 @@ export function LoginForm() {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-            signInWithEmailAndPassword(auth, emailInput, passwordInput)
+           await signInWithEmailAndPassword(auth, emailInput, passwordInput)
                 .then((response) => {
                     const { user } = response;
 
-                    saveUser(user, navigate);
+                    saveUser(user);
+                    navigate("/home");
                 })
                 .catch((error) => {
                     console.log(error);

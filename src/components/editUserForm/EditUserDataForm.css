@@ -1,0 +1,14 @@
+.error {
+    margin-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    font-size: small;
+    font-weight: 400;
+    font-style: normal;
+    color: tomato;
+    margin-left: 10px;
+}
+
+.form-control{
+    margin-top: 5px;
+}

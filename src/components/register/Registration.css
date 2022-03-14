@@ -2,22 +2,26 @@
     text-align: center;
     font-size: 40px;
 }
-
+.register-label {
+    padding: 0;
+    margin: 0;
+}
 .register-form {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
     width: 400px;
-    height: 580px;
+    height: 650px;
     border: 1px solid black;
     border-radius: 5px;
 }
 
 .form-group {
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     outline: none;
+    height: 25px;
 
 }
 .btn-signup.btn{

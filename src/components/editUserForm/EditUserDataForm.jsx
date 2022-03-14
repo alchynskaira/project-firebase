@@ -1,8 +1,9 @@
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
-import {db} from "../../firebaseConfig";
-
+import {db} from "../helpers/firebase/firebaseConfig";
+import {profileValidationForm} from "../login/formValidation";
+import "./EditUserDataForm.css";
 
 const INITIAL_FORM_VALUES = {
     name: "",
@@ -13,7 +14,8 @@ const INITIAL_FORM_VALUES = {
 export function EditUserDataForm({onClose}) {
 
     const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-    const [errors, setErrors] = useState({name: {
+    const [errors, setErrors] = useState({
+        name: {
             valid: true,
             text: ""
         },
@@ -30,24 +32,28 @@ export function EditUserDataForm({onClose}) {
 
 
     function updateUser(id, arr) {
+        const user = JSON.parse(localStorage.getItem( "userData"));
+        console.log(user);
+        if(user) {
+            let userData = {
+                name: arr.name,
+                birthday: arr.birthday,
+                profession: arr.profession
+            };
+            db.collection('user').doc(user.id).set(userData)
 
-        let data1 = {
-            name: arr.name,
-            birthday: arr.birthday,
-            profession: arr.profession
-        };
-        db.collection('user').doc(id).set(data1)
 
+        }
 
     }
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formValues);
-        updateUser("nNKpHpEVaAWnGJt4Xjih", formValues);
-        onClose()
 
+        updateUser("nNKpHpEVaAWnGJt4Xjih", formValues);
+
+        onClose();
     }
 
     const changeField = (field, value) => {
@@ -55,26 +61,27 @@ export function EditUserDataForm({onClose}) {
             ...formValues,
             [field]:value,
         });
-    // setErrors(profileValidationForm(field,value))
+        console.log(value)
+     setErrors(profileValidationForm(field, value))
 
     }
 
     const resetForm = () => {
         setFormValues(INITIAL_FORM_VALUES);
     };
+
     return (
         <>
             <div className="login-page">
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
-
                     className="register-form"
                 >
                     <h2 className="title">Edit User Data</h2>
                     <div className="flex">
                         <div className="form-group">
-                            <label className="register-label">Name
+                            <label className="update-label">Name
                                 <TextField fullWidth
                                            type="text"
                                            autoComplete="off"
@@ -86,9 +93,9 @@ export function EditUserDataForm({onClose}) {
                                 />
                             </label>
                         </div>
-                        {!errors.name && <p className="error">{errors.name}</p>}
+                        {!errors.name.valid && <p className="error">{errors.name.text}</p>}
                         <div className="form-group">
-                            <label className="register-label">Birthday
+                            <label className="update-label">Birthday
                                 <TextField fullWidth
                                            type="text"
                                            autoComplete="off"
@@ -101,9 +108,9 @@ export function EditUserDataForm({onClose}) {
                                 />
                             </label>
                         </div>
-                        {!errors.birthday && <p className="error">{errors.birthday}</p>}
+                        {!errors.birthday.valid && <p className="error">{errors.birthday.text}</p>}
                         <div className="form-group">
-                            <label className="register-label">Profession
+                            <label className="update-label">Profession
                                 <TextField fullWidth
                                            name="profession"
                                            type="text"
@@ -117,9 +124,9 @@ export function EditUserDataForm({onClose}) {
                                 />
                             </label>
                         </div>
-                        {!errors.profession && <p className="error">{errors.profession}</p>}
+                        {!errors.profession.valid && <p className="error">{errors.profession.text}</p>}
                         <Button variant="contained"   type="submit" className="btn-signup btn">
-                            Submit
+                            Update
                         </Button>
                     </div>
                 </form>

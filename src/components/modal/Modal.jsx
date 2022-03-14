@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
-import {EditUserDataForm} from "../editUserInfo/EditUserData";
+import {EditUserDataForm} from "../editUserForm/EditUserDataForm";
 import "./Modal.css";
 import {Button} from "@mui/material";
 

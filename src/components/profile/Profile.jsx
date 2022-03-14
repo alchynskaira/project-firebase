@@ -11,7 +11,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import {db} from "../../firebaseConfig";
+import {db} from "../helpers/firebase/firebaseConfig";
+
 
 
 const useStyles = makeStyles((theme) =>
@@ -25,12 +26,13 @@ const useStyles = makeStyles((theme) =>
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "centre",
+           height:"100%",
 
         },
         content: {
             backgroundImage: "url(https://picsum.photos/500/194)",
             width:"100%",
-            height: "100%",
+           marginBottom:"15px",
             color: "white",
             backgroundRepeat: "no-repeat",
             display: "flex",
@@ -67,53 +69,55 @@ const useStyles = makeStyles((theme) =>
 
 export default function UserCard() {
     const classes = useStyles();
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
 
-
-
     useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem( "userData"));
+     db.collection('user').doc(userData.uid).get().then(snapshot => setUser(snapshot.data())
 
-        db.collection("user").onSnapshot(el => {
-            el.docs.forEach(doc => {
-                setUser([...user, ...[doc.data()]]);
 
-            })
-        })
+        )
+    // const unsubscribe =
+    //     db.collection("user").onSnapshot(el => {
+    //          el.docs.forEach(doc => {
+    //             setUser(doc.data());
+    //             console.log(doc.data(), user.id);
+    //
+    //         })
+    //     })
+        //return () => unsubscribe();
     }, [])
 
-    console.log(user)
+
+
 
     return (
         <div>
             { modalOpen && <Modal onClose={setModalOpen}/>}
-            {user.map((el)=> {
-                //el = el[0]
-                return (
-                    <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={el.id}>
+
+                    <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
                         <CardHeader
                             avatar={
                                 <Avatar
                                     className="avatar"
                                     alt="Remy Sharp"
-                                    src={el.avatar}
+                                    src={user?.avatar}
                                     sx={{width: 68, height: 68}}
                                 />
-
                             }
-
                         />
                             <CardContent >
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    {el.name}
+                                    {user?.name}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    Profession: {el.profession}
+                                    Profession: {user?.profession}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    Birthday: {el.birthday}
+                                    Birthday: {user?.birthday}
                                 </Typography>
                             </CardContent>
                         </div>
@@ -128,15 +132,10 @@ export default function UserCard() {
                                 Update user
                             </Button>
                         </CardActions>
-
                     </Card>
-                );
-            })}
+
         </div>
 
     )
-
-
-
 
 }

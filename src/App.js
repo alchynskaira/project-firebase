@@ -14,7 +14,7 @@ import ProfilePage from "./pages/Profile";
 
 
 function App() {
-    let navigate = useNavigate();
+
     // const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                saveUser(user, navigate);
+                saveUser(user);
 
             } else {
                 console.log("user is not logged in");
@@ -35,8 +35,6 @@ function App() {
         <div className="App">
 
             <Container>
-                {/*{!isLoading && <CircularIndeterminate />}*/}
-
                 <NavBar/>
                 <Routes>
                     <Route path="login" element={<LoginPage/>}/>
