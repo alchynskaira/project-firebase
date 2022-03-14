@@ -50,3 +50,76 @@ const createMaxMinLengthError = (fieldName, min, max) =>
     return errors;
 };
 
+ export const signupValidation =(password, confirmPassword) => {
+     const errors = {
+         confirmPassword: {
+             valid:true,
+             text: ""
+         }
+     };
+
+     if (password === confirmPassword ) {
+         errors.confirmPassword.text = "";
+         errors.confirmPassword.valid = true;
+
+     } else {
+
+         errors.confirmPassword.text = "Password doesn't match";
+         errors.confirmPassword.valid = false;
+     }
+
+return errors;
+
+ };
+
+
+ export const profileValidationForm =(field,value)=> {
+     console.log("valid value",value);
+     const name = "name";
+     const birthday = "birthday";
+     const profession = "profession";
+     const validLength = isValidLength(value, 1, 15);
+     console.log(value, "value82")
+     const errors = {
+         name: {
+             valid: true,
+             text: ""
+         },
+         birthday: {
+             valid: true,
+             text: ""
+         },
+         profession: {
+             valid: true,
+             text: ""
+         },
+     };
+
+         if (field === name && validLength) {
+             errors.name.text = createMaxMinLengthError("name", 2, 30);
+             errors.name.valid = false;
+         } else {
+
+             errors.name.valid = true;
+
+         }
+         if (field === birthday && validLength) {
+             errors.birthday.text = createMaxMinLengthError("birthday", 2, 20);
+             errors.birthday.valid = false;
+         } else {
+
+             errors.birthday.valid = true;
+
+         }
+         if (field === profession && validLength) {
+             errors.profession.text = createMaxMinLengthError("profession", 2, 30);
+             errors.profession.valid = false;
+         } else {
+
+             errors.profession.valid = true;
+
+         }
+
+         return errors;
+
+ }

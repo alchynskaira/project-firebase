@@ -18,8 +18,7 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "double"],
-        "react/prop-types": ["off"]
-    }
+        "react/prop-types": ["off"],
+        "no-unused-vars": 0
+    },
 }

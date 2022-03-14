@@ -4,42 +4,49 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 import {NavBar} from "./components/navBar/NavBar";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import{PrivateRoute} from "./components/routs";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import RegistrationPage from "./pages/RegistrationPage";
+import {PrivateRoute} from "./components/routs";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {saveUser} from "./components/helpers/saveUser";
+import ProfilePage from "./pages/Profile";
 
-
-
+// import CircularIndeterminate from "./components/helpers/loader/LoaderSpinner";
 
 
 function App() {
-    let navigate = useNavigate();
 
-    useEffect(()=> {
+    // const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
         const auth = getAuth();
 
-        console.log("123");
         onAuthStateChanged(auth, (user) => {
             if (user) {
-               saveUser(user, navigate);
+                saveUser(user);
 
             } else {
                 console.log("user is not logged in");
             }
-    });
+        });
 
-}, []);
-  return (
-    <div className="App">
-      <Container >
-          <NavBar/>
-      <Routes>
-          <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>} />
-           <Route path="login" element={ <LoginPage/>}/>
-      </Routes>
-      </Container>
-    </div>
-  );
+    }, []);
+
+    return (
+        <div className="App">
+
+            <Container>
+                <NavBar/>
+                <Routes>
+                    <Route path="login" element={<LoginPage/>}/>
+                    <Route path="register" element={<RegistrationPage/>}/>
+                    <Route path="profile" element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
+                    <Route path="home" element={<PrivateRoute> <HomePage/> </PrivateRoute>}/>
+                </Routes>
+
+            </Container>
+
+        </div>
+    );
 }
 
 export default App;

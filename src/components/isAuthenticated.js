@@ -1,14 +1,6 @@
-import { getAuth } from "firebase/auth";
- export const getUserState = ( )=> {
-
-     const auth = getAuth();
-
-     const user = auth.currentUser;
-
-
-     return !!user;
-
-
+export const getUserState = ( )=> {
+     const token = localStorage.getItem("token");
+     return !!token;
 };
 
 
