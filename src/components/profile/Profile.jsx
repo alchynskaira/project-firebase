@@ -75,10 +75,14 @@ export default function UserCard() {
 
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem( "userData"));
-     db.collection('user').doc(userData.uid).get().then(snapshot => setUser(snapshot.data())
-
+        console.log(userData)
+     db.collection('user').doc(userData.uid).get().then(snapshot => {
+             console.log(snapshot.data(), "data")
+         setUser(snapshot.data())
+     }
 
         )
+
     // const unsubscribe =
     //     db.collection("user").onSnapshot(el => {
     //          el.docs.forEach(doc => {
@@ -91,11 +95,11 @@ export default function UserCard() {
     }, [])
 
 
-
+    console.log(user, "user");
 
     return (
         <div>
-            { modalOpen && <Modal onClose={setModalOpen}/>}
+            {/*{ modalOpen && <Modal onClose={setModalOpen}/>}*/}
 
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
