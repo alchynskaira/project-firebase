@@ -3,12 +3,16 @@ import {TextField, Button} from "@mui/material";
 import {formValidationLogin, signupValidation} from "../login/formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
-import {addDoc} from "firebase/firestore";
+   import AdapterDateFns from '@mui/lab/AdapterDateFns';
+   import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import {db} from "../helpers/firebase/firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
 import {saveUser} from "../helpers/saveUser";
 import {FlashMessage} from "../helpers/alert/FlashMessage";
+import {format} from "date-fns";
+
 
 let pass = "";
 
@@ -18,8 +22,11 @@ export function RegistrationForm() {
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
-  const [birthdayValue, setBirthdayValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
+  const [open, setOpen] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+  const [todos, setTodos] = useState([]);
     const [errors, setErrors] = useState({
         email: {
             valid: true,
@@ -29,15 +36,13 @@ export function RegistrationForm() {
             valid: true,
             text: ""
         },
-       });
+       })
     const [passErrors, setPassErrors] = useState({
         confirmPassword: {
             valid: true,
             text: ""
         }
     });
-    const [open, setOpen] = useState(false);
-    const [success, setSuccess] = useState(false);
 
     const setEmail = (e) => {
         setEmailValue(e.target.value);
@@ -60,10 +65,6 @@ export function RegistrationForm() {
         setNameValue(e.target.value);
     };
 
-    const setRegistrationBirthday = (e) => {
-        setBirthdayValue(e.target.value);
-    };
-
     const setRegistrationProfession = (e) => {
         setProfessionValue(e.target.value);
     };
@@ -80,16 +81,19 @@ export function RegistrationForm() {
             .then((cred) => {
                 return db.collection("user").doc(cred.user.uid).set({
                     name: nameValue,
-                    birthday: birthdayValue,
+                    birthday: selectedDate,
                     profession: professionValue,
+                    todos: todos
                 })
             }).then((user)=>  {
-                saveUser(user);
+            saveUser(user);
             setSuccess(true);
             setOpen(true);
-            resetForm();
-            navigate('/login')
+
         })
+        navigate('/login');
+        resetForm();
+
         }
 
     const resetForm = () => {
@@ -97,14 +101,11 @@ export function RegistrationForm() {
         setPasswordValue("");
         setConfirmValue("");
         setNameValue("");
-        setBirthdayValue("");
         setProfessionValue("");
 
 
 
     };
-
-
 
     return (
         <>
@@ -179,18 +180,21 @@ export function RegistrationForm() {
                         </div>
                         <div className="form-group">
                             <label className="register-label">Birthday
-                                <TextField fullWidth
-                                           name="birthday"
-                                           type="text"
-                                           autoComplete="off"
-                                           className="form-control"
-                                           id="birthday"
-                                           placeholder="Enter day of birth"
-                                           value={birthdayValue}
-                                           onChange={setRegistrationBirthday}
-                                           required
-                                />
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        views={["year", "month", "day"]}
+                                        format={'DD/MM/YYYY'}
+                                    value={selectedDate}
+                                    data="DD-MM-YYYY"
+                                    KeyboardButtonProps={{"aria-label": "change date" }}
+                                    onChange={(selectedData)=> setSelectedDate(selectedData)
+                                }
+                                    renderInput={(params) =>
+                                    <TextField type="date" {...params} className= "date-input"   />}
+                                    />
+                                    </LocalizationProvider>
                             </label>
+
                         </div>
                         <div className="form-group">
                             <label className="register-label">Profession

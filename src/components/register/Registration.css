@@ -11,7 +11,7 @@
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
-    width: 400px;
+    width: 500px;
     height: 650px;
     border: 1px solid black;
     border-radius: 5px;
@@ -39,4 +39,15 @@
     font-style: normal;
     color: tomato;
     margin-left: 10px;
+}
+.date-input{
+    width: 100%;
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.date-input::placeholder {
+    color: lightgray;
+    font-size: 20px;
 }

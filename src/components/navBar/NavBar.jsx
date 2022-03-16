@@ -44,7 +44,7 @@ export  function NavBar() {
                     >
                     </IconButton>
 
-                    {isAuthenticated && isLoading &&  (
+                    {isAuthenticated  &&  (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
                         </NavLink>
