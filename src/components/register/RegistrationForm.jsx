@@ -25,7 +25,7 @@ export function RegistrationForm() {
   const [professionValue, setProfessionValue] = useState("");
   const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date()  );
+    const [selectedDate, setSelectedDate] = useState(new Date());
   const [todos, setTodos] = useState([]);
     const [errors, setErrors] = useState({
         email: {

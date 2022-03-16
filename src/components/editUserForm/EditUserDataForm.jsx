@@ -22,7 +22,7 @@ export function EditUserDataForm({onClose}) {
     //const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("")
-    const [dateOfBirth, setDateOfBirth] = useState(new Date());
+    const [dateOfBirth, setDateOfBirth] = useState("");
     const [success, setSuccess] = useState(false);
     const [errors, setErrors] = useState({
         name: {
@@ -46,15 +46,7 @@ export function EditUserDataForm({onClose}) {
         setProfession(e.target.value);
     }
 
-    function updateUser(uid, user) {
-         console.log(dateOfBirth, "date of birth");
-        // const userDateOfBirth = user.birthday.toDate();
-        // console.log(userDateOfBirth)
-        // user.birthday = ("0" + userDateOfBirth.getDate()).slice(-2) + "." +
-        //     ("0" + (userDateOfBirth.getMonth() + 1)).slice(-2) + "." + userDateOfBirth.getFullYear();
-        // console.log(user, "userEdit");
-        //
-        // console.log(userDateOfBirth, "userDateOfBirth");
+    function updateUser(uid) {
 
         db.collection('user').doc(uid).set({
             name: name,
@@ -68,7 +60,7 @@ export function EditUserDataForm({onClose}) {
         const user = JSON.parse(localStorage.getItem("userData"));
         console.log(user, "69")
         if (user.uid) {
-            updateUser(user.uid, user);
+            updateUser(user.uid);
         }
         setSuccess(true);
         //resetForm()
@@ -117,13 +109,15 @@ export function EditUserDataForm({onClose}) {
                             <label className="register-label">Birthday
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
+                                        views={["year", "month", "day"]}
+                                        format={'DD/MM/YYYY'}
                                         value={dateOfBirth}
                                         KeyboardButtonProps={{"aria-label": "change date"}}
                                         onChange={(dateOfBirth) => setDateOfBirth(dateOfBirth)
                                         }
                                         renderInput={(params) =>
-                                            <TextField {...params} className="date-input"/>}
-                                        date="mm/dd/yy"/>
+                                            <TextField type="date" {...params} className="date-input"/>}
+                                      />
                                 </LocalizationProvider>
                             </label>
                         </div>

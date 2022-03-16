@@ -73,26 +73,36 @@ export default function UserCard() {
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
+const getUserData = () =>{
+
+    const userData = JSON.parse(localStorage.getItem( "userData"));
+
+    db.collection('user').doc(userData.uid).get().then(snapshot => {
+
+            const userData = snapshot.data();
+            const date = userData.birthday.toDate()
+            userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
+                ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+
+            setUser(userData)
+        }
+    )
+}
 
     useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem( "userData"));
-
-        db.collection('user').doc(userData.uid).get().then(snapshot => {
-
-
-                const userData = snapshot.data();
-                const date = snapshot.data().birthday.toDate()
-                userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
-                    ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-
-                setUser(userData)
-            }
-        )
+        getUserData()
     }, [])
+
+
+    const onModalClose = () => {
+    getUserData()
+        setModalOpen(false);
+    }
 
     return (
         <div>
-            { modalOpen && <Modal onClose={setModalOpen}/>}
+            { modalOpen && <Modal onClose={onModalClose}/>}
+
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
                         <CardHeader
