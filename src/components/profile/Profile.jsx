@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
+import { format } from 'date-fns'
 import {db} from "../helpers/firebase/firebaseConfig";
 
 
@@ -75,32 +76,23 @@ export default function UserCard() {
 
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem( "userData"));
-        console.log(userData)
-     db.collection('user').doc(userData.uid).get().then(snapshot => {
-             console.log(snapshot.data(), "data")
-         setUser(snapshot.data())
-     }
 
+        db.collection('user').doc(userData.uid).get().then(snapshot => {
+
+
+                const userData = snapshot.data();
+                const date = snapshot.data().birthday.toDate()
+                userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
+                    ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+
+                setUser(userData)
+            }
         )
-
-    // const unsubscribe =
-    //     db.collection("user").onSnapshot(el => {
-    //          el.docs.forEach(doc => {
-    //             setUser(doc.data());
-    //             console.log(doc.data(), user.id);
-    //
-    //         })
-    //     })
-        //return () => unsubscribe();
     }, [])
-
-
-    console.log(user, "user");
 
     return (
         <div>
-            {/*{ modalOpen && <Modal onClose={setModalOpen}/>}*/}
-
+            { modalOpen && <Modal onClose={setModalOpen}/>}
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
                         <CardHeader

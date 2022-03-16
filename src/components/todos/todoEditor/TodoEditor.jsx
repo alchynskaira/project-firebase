@@ -9,7 +9,6 @@ const TodoEditor = ({onSubmit}) => {
 
     const handleChange = e => {
         setInputValue(e.currentTarget.value);
-
     };
 
     const handleSubmit = e => {
@@ -17,7 +16,6 @@ const TodoEditor = ({onSubmit}) => {
         if (!inputValue) return;
         onSubmit(inputValue);
         setInputValue('');
-
     };
 
     return (

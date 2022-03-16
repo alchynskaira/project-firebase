@@ -1,4 +1,3 @@
-
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {db} from "../helpers/firebase/firebaseConfig";
@@ -9,6 +8,8 @@ import {FlashMessage} from "../helpers/alert/FlashMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
+import firebase from "firebase/compat/app";
+import firestore from "firebase/compat/app";
 
 const INITIAL_FORM_VALUES = {
     name: "",
@@ -19,9 +20,9 @@ const INITIAL_FORM_VALUES = {
 export function EditUserDataForm({onClose}) {
 
     //const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-    const [name, setName] =useState("");
-    const [profession, setProfession] =useState("")
-    const [dateOfBirth, setDateOfBirth] = useState(new Date())
+    const [name, setName] = useState("");
+    const [profession, setProfession] = useState("")
+    const [dateOfBirth, setDateOfBirth] = useState(new Date());
     const [success, setSuccess] = useState(false);
     const [errors, setErrors] = useState({
         name: {
@@ -38,27 +39,36 @@ export function EditUserDataForm({onClose}) {
         }
     });
 
-const handleName = (e) => {
-    setName(e.target.value);
-}
-const handleProfession = (e) => {
-    setProfession(e.target.value);
-}
+    const handleName = (e) => {
+        setName(e.target.value);
+    }
+    const handleProfession = (e) => {
+        setProfession(e.target.value);
+    }
 
-    function updateUser(uid) {
+    function updateUser(uid, user) {
+         console.log(dateOfBirth, "date of birth");
+        // const userDateOfBirth = user.birthday.toDate();
+        // console.log(userDateOfBirth)
+        // user.birthday = ("0" + userDateOfBirth.getDate()).slice(-2) + "." +
+        //     ("0" + (userDateOfBirth.getMonth() + 1)).slice(-2) + "." + userDateOfBirth.getFullYear();
+        // console.log(user, "userEdit");
+        //
+        // console.log(userDateOfBirth, "userDateOfBirth");
 
         db.collection('user').doc(uid).set({
             name: name,
-            birthday: [dateOfBirth],
+            birthday: dateOfBirth,
             profession: profession
         })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const user = JSON.parse(localStorage.getItem( "userData"));
-        if(user.uid){
-            updateUser(user.uid)
+        const user = JSON.parse(localStorage.getItem("userData"));
+        console.log(user, "69")
+        if (user.uid) {
+            updateUser(user.uid, user);
         }
         setSuccess(true);
         //resetForm()
@@ -81,7 +91,7 @@ const handleProfession = (e) => {
     return (
         <>
             <div className="update-page">
-                {success && <FlashMessage />}
+                {success && <FlashMessage/>}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
@@ -97,8 +107,8 @@ const handleProfession = (e) => {
                                            className="form-control"
                                            id="name"
                                            placeholder="Edit your name"
-                                            value={name}
-                                            onChange={ handleName}
+                                           value={name}
+                                           onChange={handleName}
                                 />
                             </label>
                         </div>
@@ -108,12 +118,12 @@ const handleProfession = (e) => {
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         value={dateOfBirth}
-                                        KeyboardButtonProps={{"aria-label": "change date" }}
-                                        onChange={(dateOfBirth)=> setDateOfBirth(dateOfBirth)
+                                        KeyboardButtonProps={{"aria-label": "change date"}}
+                                        onChange={(dateOfBirth) => setDateOfBirth(dateOfBirth)
                                         }
                                         renderInput={(params) =>
-                                            <TextField {...params} className= "date-input"   />}
-                                     date="mm/dd/yy"/>
+                                            <TextField {...params} className="date-input"/>}
+                                        date="mm/dd/yy"/>
                                 </LocalizationProvider>
                             </label>
                         </div>
@@ -127,14 +137,14 @@ const handleProfession = (e) => {
                                            className="form-control"
                                            id="profession"
                                            placeholder="Edit your profession"
-                                            value={profession}
+                                           value={profession}
                                            onChange={handleProfession}
                                            required
                                 />
                             </label>
                         </div>
                         {!errors.profession.valid && <p className="error">{errors.profession.text}</p>}
-                        <Button variant="contained"   type="submit" className="btn-signup btn">
+                        <Button variant="contained" type="submit" className="btn-signup btn">
                             Update
                         </Button>
                     </div>

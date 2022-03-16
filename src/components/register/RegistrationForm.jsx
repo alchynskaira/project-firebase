@@ -3,8 +3,6 @@ import {TextField, Button} from "@mui/material";
 import {formValidationLogin, signupValidation} from "../login/formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
-
-import Box from '@mui/material/Box';
    import AdapterDateFns from '@mui/lab/AdapterDateFns';
    import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -13,6 +11,8 @@ import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
 import {saveUser} from "../helpers/saveUser";
 import {FlashMessage} from "../helpers/alert/FlashMessage";
+import {format} from "date-fns";
+
 
 let pass = "";
 
@@ -25,7 +25,7 @@ export function RegistrationForm() {
   const [professionValue, setProfessionValue] = useState("");
   const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date()  );
   const [todos, setTodos] = useState([]);
     const [errors, setErrors] = useState({
         email: {
@@ -86,13 +86,13 @@ export function RegistrationForm() {
                     todos: todos
                 })
             }).then((user)=>  {
-                saveUser(user);
+            saveUser(user);
             setSuccess(true);
             setOpen(true);
-            navigate('/login');
-            resetForm();
-        })
 
+        })
+        navigate('/login');
+        resetForm();
 
         }
 
@@ -182,12 +182,15 @@ export function RegistrationForm() {
                             <label className="register-label">Birthday
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
+                                        views={["year", "month", "day"]}
+                                        format={'DD/MM/YYYY'}
                                     value={selectedDate}
+                                    data="DD-MM-YYYY"
                                     KeyboardButtonProps={{"aria-label": "change date" }}
                                     onChange={(selectedData)=> setSelectedDate(selectedData)
                                 }
                                     renderInput={(params) =>
-                                    <TextField {...params} className= "date-input"   />}
+                                    <TextField type="date" {...params} className= "date-input"   />}
                                     />
                                     </LocalizationProvider>
                             </label>
