@@ -26,7 +26,7 @@ export function RegistrationForm() {
   const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
-  const [todos, setTodos] = useState([]);
+
     const [errors, setErrors] = useState({
         email: {
             valid: true,
@@ -79,11 +79,11 @@ export function RegistrationForm() {
      }
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then((cred) => {
+                console.log(cred);
                 return db.collection("user").doc(cred.user.uid).set({
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
-                    todos: todos
                 })
             }).then((user)=>  {
             saveUser(user);

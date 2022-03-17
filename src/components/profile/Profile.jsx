@@ -81,6 +81,7 @@ const getUserData = () =>{
 
             const userData = snapshot.data();
             const date = userData.birthday.toDate()
+       // console.log(userData, "data")
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
 

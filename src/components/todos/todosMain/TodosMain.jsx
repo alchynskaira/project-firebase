@@ -1,29 +1,37 @@
 import React,{useState, useEffect}from  "react";
-import shortid from 'shortid';
 import TodoList from "../todoList/TodoList";
 import TodoEditor from "../todoEditor/TodoEditor";
+import {db} from "../../helpers/firebase/firebaseConfig";
 
 
+const TodosMain = () => {
+    const [todos, setTodos] = useState([]);
 
-const TodosMain = ()=>{
-    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("todos")) || []);
+    const getTodoData = () => {
+        const currentUser = JSON.parse(localStorage.getItem( "userData"));
 
-    const addTodo = (text) => {
-        const newTodos = {
-            id: shortid.generate(),
-            text: text,
-            isCompleted: false,
-            filter: "",
-        };
-        setTodos([newTodos, ...todos]);
-        window.localStorage.setItem( "todos", JSON.stringify(newTodos))
-    };
-
+        db.collection('todo').where("userId", "==", currentUser.uid).get().then(snapshot => {
+            const userTodos = snapshot.docs.map(doc => {
+                return { id: doc.id, ...doc.data() }
+            });
+            setTodos(userTodos);
+        })
+    }
 
     useEffect(() => {
-        localStorage.setItem( "todos", JSON.stringify(todos));
-    }, [todos])
+        getTodoData()
+    }, [])
 
+
+    const addTodo =  (text) => {
+        const currentUser = JSON.parse(localStorage.getItem( "userData"));
+          db.collection('todo').doc(currentUser.uid).set({
+            title: text,
+            completed: false,
+            userId: currentUser.uid
+        })
+        setTodos(todos);
+}
 
     const deleteTodo = todoId => {
         const deleteTodo = todos.filter(todo => todo.id !== todoId);
@@ -38,7 +46,6 @@ const TodosMain = ()=>{
         setTodos(toggle);
 
     }
-
 
     return (
         <div className="container">

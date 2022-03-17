@@ -19,7 +19,7 @@ const INITIAL_FORM_VALUES = {
 
 export function EditUserDataForm({onClose}) {
 
-    //const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
+
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("")
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -58,27 +58,20 @@ export function EditUserDataForm({onClose}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem("userData"));
-        console.log(user, "69")
+
         if (user.uid) {
             updateUser(user.uid);
         }
         setSuccess(true);
-        //resetForm()
+        resetForm()
         onClose();
     }
-    //
-    // const changeField = (field, value) => {
-    //     setFormValues({
-    //         ...formValues,
-    //         [field]:value,
-    //     });
-    //  setErrors(profileValidationForm(field, value));
-    //
-    // }
-    //
-    // const resetForm = () => {
-    //     setFormValues(INITIAL_FORM_VALUES);
-    // };
+
+    const resetForm = () => {
+        setName('');
+        setProfession("");
+        setDateOfBirth("");
+    };
 
     return (
         <>
