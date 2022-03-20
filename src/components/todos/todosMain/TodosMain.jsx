@@ -14,6 +14,7 @@ const TodosMain = () => {
             const userTodos = snapshot.docs.map(doc => {
                 return { id: doc.id, ...doc.data() }
             });
+
             setTodos(userTodos);
         })
     }
@@ -25,26 +26,40 @@ const TodosMain = () => {
 
     const addTodo =  (text) => {
         const currentUser = JSON.parse(localStorage.getItem( "userData"));
-          db.collection('todo').doc(currentUser.uid).set({
+        const todoItem = {
             title: text,
             completed: false,
-            userId: currentUser.uid
+            userId: currentUser.uid,
+        }
+        db.collection("todo").add(todoItem)
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            todoItem.id = docRef.id;
+            getTodoData();
         })
-        setTodos(todos);
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
 }
 
-    const deleteTodo = todoId => {
-        const deleteTodo = todos.filter(todo => todo.id !== todoId);
-        setTodos(deleteTodo);
+    const deleteTodo = (id) => {
+        db.collection("todo").doc(id).delete().then(() => {
+            console.log("Document successfully deleted!");
+            getTodoData();
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
     };
 
-    const toggleCompleted = todoId => {
-
-        const toggle = todos.map((todo) =>
-            todo.id === todoId ? { ...todos, isCompleted : !todos.isCompleted } : {...todos} )
-
-        setTodos(toggle);
-
+    const toggleCompleted = (todo) => {
+        db.collection("todo").doc(todo.id).update({
+            completed: !todo.completed
+        }).then(() => {
+            console.log("Document successfully updated!");
+            getTodoData();
+        }).catch((error) => {
+            console.error("Error updating document: ", error);
+        });
     }
 
     return (
