@@ -21,7 +21,7 @@ const TodoEditor = ({onSubmit}) => {
     return (
         <form className="todoEditor" onSubmit={handleSubmit}>
             <TextField placeholder="Add todo here" className="todoList-input" value={inputValue} onChange={handleChange}>Some text</TextField>
-            <Button variant="contained" type="submit" className="editor-btn" onSubmit={onSubmit}>Save</Button>
+            <Button variant="contained" type="submit" className="todo-btn" onSubmit={onSubmit}>Save</Button>
         </form>
     )
 

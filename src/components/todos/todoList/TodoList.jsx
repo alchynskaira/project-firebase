@@ -1,24 +1,31 @@
 import React from "react";
-import Todo from "../todo/Todo";
+import {Checkbox, Button} from "@mui/material";
 import "../Todos.css";
 
-const TodoList = ({ todos, onDeleteTodo, onToggleCompleted }) =>
-    (
+const TodoList = ({todos,  onDeleteTodo, onToggleCompleted }) => {
+
+  return   (
+
         <ul className="todoList">
-            {todos.map(({ id, text, completed}) => (
-                <li
-                    key={id}
-                    className={todos.completed ? "item-text strike" : "todoList-item"}
-                >
-                    <Todo
-                        text={text}
-                        completed={completed}
-                        onToggleCompleted={() => onToggleCompleted(id)}
-                        onDelete={() =>  onDeleteTodo(id)}
+            {todos.map((todo) => (
+                <li key={todo.id} className="todoList-item">
+                    <div className="contentList-box">
+                    <Checkbox
+                        type="checkbox"
+                        className="todo-checkbox"
+                        checked={todo.completed}
+                        onChange={() => onToggleCompleted(todo)}
                     />
+                    <p className="todo-text">{todo.title}</p>
+                    </div>
+                    <Button type="button" variant="contained" className="todoList-btn" onClick={() => onDeleteTodo(todo.id)}>
+                        Delete
+                    </Button>
                 </li>
             ))}
         </ul>
     );
+}
+
 
 export default TodoList;

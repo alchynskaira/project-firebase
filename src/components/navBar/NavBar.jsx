@@ -17,8 +17,7 @@ import "./NavBar.css";
 export  function NavBar() {
      const navigate = useNavigate();
      const isAuthenticated =  getUserState();
-
-    const [isLoading, setIsLoading] = useState(false);
+     const [isLoading, setIsLoading] = useState(false);
 
      const handleLogoutClick = () => {
          const auth = getAuth();
@@ -43,7 +42,6 @@ export  function NavBar() {
                         sx={{ mr: 2 }}
                     >
                     </IconButton>
-
                     {isAuthenticated  &&  (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
@@ -65,7 +63,6 @@ export  function NavBar() {
                     {isAuthenticated && ( <Link to="/profile" className="navLink" >
                         <AccountBoxIcon className="icon-profile"/>
                     </Link>)}
-
                 </Toolbar>
             </AppBar>
         </Box>
