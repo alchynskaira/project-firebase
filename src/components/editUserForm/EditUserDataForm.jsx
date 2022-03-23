@@ -19,7 +19,7 @@ const INITIAL_FORM_VALUES = {
 
 export function EditUserDataForm({onClose}) {
 
-
+    //const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("")
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -47,33 +47,38 @@ export function EditUserDataForm({onClose}) {
     }
 
     function updateUser(uid) {
+
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
             profession: profession
-        }).catch((error) => {
-            console.error("Error adding document: ", error);
-        });
+        })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const user = JSON.parse(localStorage.getItem("userData"));
-
+        console.log(user, "69")
         if (user.uid) {
             updateUser(user.uid);
         }
         setSuccess(true);
-        resetForm();
+        //resetForm()
         onClose();
     }
-
-    const resetForm = () => {
-        setName('');
-        setProfession("");
-        setDateOfBirth("");
-    };
+    //
+    // const changeField = (field, value) => {
+    //     setFormValues({
+    //         ...formValues,
+    //         [field]:value,
+    //     });
+    //  setErrors(profileValidationForm(field, value));
+    //
+    // }
+    //
+    // const resetForm = () => {
+    //     setFormValues(INITIAL_FORM_VALUES);
+    // };
 
     return (
         <>
