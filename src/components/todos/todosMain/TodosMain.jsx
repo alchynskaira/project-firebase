@@ -16,7 +16,9 @@ const TodosMain = () => {
             });
 
             setTodos(userTodos);
-        })
+        }).catch((error) => {
+            console.error("Error getting document: ", error);
+        });
     }
 
     useEffect(() => {
