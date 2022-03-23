@@ -11,15 +11,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import { format } from 'date-fns'
 import {db} from "../helpers/firebase/firebaseConfig";
-
 
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-             margin: "32px auto",
+            margin: "32px auto",
+            height: "400px",
+            width:"500px",
         },
         bcgImage: {
             opacity: "0.10",
@@ -27,13 +27,14 @@ const useStyles = makeStyles((theme) =>
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "centre",
-           height:"100%",
+            height:"600px",
+            width: "100%",
 
         },
         content: {
             backgroundImage: "url(https://picsum.photos/500/194)",
             width:"100%",
-           marginBottom:"15px",
+            marginBottom:"15px",
             color: "white",
             backgroundRepeat: "no-repeat",
             display: "flex",
@@ -64,12 +65,18 @@ const useStyles = makeStyles((theme) =>
         icons: {
             color: "darkgray",
 
+        },
+        cardBox: {
+            width:"500px",
+            height:"600px",
+            margin: "32px auto",
         }
     })
 );
 
 export default function UserCard() {
     const classes = useStyles();
+
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -78,19 +85,20 @@ export default function UserCard() {
     const userData = JSON.parse(localStorage.getItem( "userData"));
 
     db.collection('user').doc(userData.uid).get().then(snapshot => {
-
             const userData = snapshot.data();
-            const date = userData.birthday.toDate()
+            const date = userData.birthday.toDate();
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
 
-            setUser(userData)
+            setUser(userData);
         }
-    )
+    ).catch((error) => {
+        console.error("Error adding document: ", error);
+    });
 }
 
     useEffect(() => {
-        getUserData()
+        getUserData();
     }, [])
 
 
@@ -100,7 +108,7 @@ export default function UserCard() {
     }
 
     return (
-        <div>
+        <div className={classes.cardBox}>
             { modalOpen && <Modal onClose={onModalClose}/>}
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>

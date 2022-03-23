@@ -47,23 +47,25 @@ export function EditUserDataForm({onClose}) {
     }
 
     function updateUser(uid) {
-
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
             profession: profession
-        })
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+        });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const user = JSON.parse(localStorage.getItem("userData"));
 
         if (user.uid) {
             updateUser(user.uid);
         }
         setSuccess(true);
-        resetForm()
+        resetForm();
         onClose();
     }
 
