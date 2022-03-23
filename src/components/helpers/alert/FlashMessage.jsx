@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {Alert} from "@mui/material";
 
 
-export  const FlashMessage = () =>  {
+export default function  FlashMessage ({message, type, isOpen})  {
 
-    return (<Alert severity="success">User has been successfully signed up!</Alert>
 
+    return (
+        <Alert severity={type} open={isOpen} message={message} autoHideDuration={3000}>{message}</Alert>
     );
-};
+}
