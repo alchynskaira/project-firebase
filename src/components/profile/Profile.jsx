@@ -13,6 +13,7 @@ import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
 import { format } from 'date-fns'
 import {db} from "../helpers/firebase/firebaseConfig";
+import FlashMessage from "../helpers/alert/FlashMessage";
 
 
 
@@ -73,7 +74,10 @@ export default function UserCard() {
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
-const getUserData = () =>{
+
+
+    const getUserData = () => {
+
 
     const userData = JSON.parse(localStorage.getItem( "userData"));
 
@@ -84,13 +88,21 @@ const getUserData = () =>{
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
 
-            setUser(userData)
+
+
+            setUser(userData);
+
         }
     )
 }
 
     useEffect(() => {
-        getUserData()
+
+
+
+
+        getUserData();
+
     }, [])
 
 
@@ -100,8 +112,9 @@ const getUserData = () =>{
     }
 
     return (
-        <div>
-            { modalOpen && <Modal onClose={onModalClose}/>}
+        <div className={classes.cardBox}>
+            {/*<FlashMessage alert={alert} setAlert={setAlert}/>*/}
+            { modalOpen && <Modal onClose={onModalClose}/> }
 
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
