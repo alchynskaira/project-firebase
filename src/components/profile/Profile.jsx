@@ -80,11 +80,7 @@ export default function UserCard() {
 
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
-    const [alert, setAlert] = useState({
-        isOpen: false,
-        message:"",
-        type: ""
-    });
+
 
     const getUserData = () => {
 
@@ -97,11 +93,7 @@ export default function UserCard() {
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
 
             setUser(userData);
-            setAlert({
-            isOpen: true,
-            message: "User data was successfully updated!",
-            type: "success"
-        })
+
         }
     ).catch((error) => {
         console.error("Error adding document: ", error);
@@ -122,7 +114,7 @@ export default function UserCard() {
     return (
 
         <div className={classes.cardBox}>
-            <FlashMessage alert={alert} setAlert={setAlert}/>
+            {/*<FlashMessage alert={alert} setAlert={setAlert}/>*/}
             { modalOpen && <Modal onClose={onModalClose}/> }
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>

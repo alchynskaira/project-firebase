@@ -14,11 +14,7 @@ export function LoginForm() {
     let navigate = useNavigate();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
-    const [alert, setAlert] = useState({
-        isOpen: false,
-        message:"",
-        type: ""
-    })
+
     const [errors, setErrors] = useState({
         email: {
             valid: true,
@@ -50,20 +46,12 @@ export function LoginForm() {
             .then((response) => {
                 const {user} = response;
                 saveUser(user);
-                setAlert({
-                    isOpen: true,
-                    message: "User has been successfully logged in!",
-                    type: "success"
-                })
+
                 navigate("/home");
             })
             .catch((error) => {
                 console.log(error);
-                setAlert({
-                    isOpen: true,
-                    message: "Something went wrong. Please try again!",
-                    type: "error"
-                })
+
             });
 
         resetForm();
@@ -79,7 +67,7 @@ export function LoginForm() {
     return (
         <>
             <div className="login-page">
-                <FlashMessage alert={alert} setAlert={setAlert}/>
+                {/*<FlashMessage  />*/}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

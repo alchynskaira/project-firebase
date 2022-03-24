@@ -7,7 +7,7 @@ import FlashMessage from "../../helpers/alert/FlashMessage";
 
 const TodosMain = () => {
     const [todos, setTodos] = useState([]);
-    let open = false;
+
 
     const getTodoData = () => {
         const currentUser = JSON.parse(localStorage.getItem( "userData"));
@@ -63,7 +63,7 @@ const TodosMain = () => {
         db.collection("todo").doc(todo.id).update({
             completed: !todo.completed
         }).then(() => {
-           open = true;
+
             console.log("Document successfully updated!");
             getTodoData();
         }).catch((error) => {

@@ -39,11 +39,7 @@ export function RegistrationForm() {
             text: ""
         }
     });
-  const [alert, setAlert] = useState({
-      isOpen: false,
-      message:"",
-      type: ""
-  })
+
 
     const setEmail = (e) => {
         setEmailValue(e.target.value);
@@ -88,11 +84,7 @@ export function RegistrationForm() {
             }).then((user)=>  {
             saveUser(user);
             setSuccess(true);
-            setAlert({
-                isOpen: true,
-                message: "User has successfully registered!!!",
-                type: "success"
-        })
+
 
         }).catch((error) => {
             console.error("Registration error: ", error);
@@ -116,7 +108,7 @@ export function RegistrationForm() {
     return (
         <>
             <div className="login-page">
-                {success &&  <FlashMessage alert={alert} setAlert={setAlert}/>}
+                {/*{success &&  <FlashMessage />}*/}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
