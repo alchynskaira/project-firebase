@@ -4,15 +4,17 @@ import {formValidationLogin} from "./formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
 import {signInWithEmailAndPassword} from "firebase/auth";
-//import PersonIcon from "@mui/icons-material/Person";
-import "./Login.css";
 import {saveUser} from "../helpers/saveUser";
+import FlashMessage from "../helpers/alert/FlashMessage";
+import "./Login.css";
+
 
 
 export function LoginForm() {
     let navigate = useNavigate();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
+
     const [errors, setErrors] = useState({
         email: {
             valid: true,
@@ -43,12 +45,13 @@ export function LoginForm() {
         await signInWithEmailAndPassword(auth, emailInput, passwordInput)
             .then((response) => {
                 const {user} = response;
-
                 saveUser(user);
+
                 navigate("/home");
             })
             .catch((error) => {
                 console.log(error);
+
             });
 
         resetForm();
@@ -64,6 +67,7 @@ export function LoginForm() {
     return (
         <>
             <div className="login-page">
+                {/*<FlashMessage  />*/}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

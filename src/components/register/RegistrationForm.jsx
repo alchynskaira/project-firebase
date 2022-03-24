@@ -10,7 +10,7 @@ import {db} from "../helpers/firebase/firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
 import {saveUser} from "../helpers/saveUser";
-import {FlashMessage} from "../helpers/alert/FlashMessage";
+import FlashMessage from "../helpers/alert/FlashMessage";
 
 let pass = "";
 
@@ -21,7 +21,6 @@ export function RegistrationForm() {
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
-  const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({
@@ -40,6 +39,7 @@ export function RegistrationForm() {
             text: ""
         }
     });
+
 
     const setEmail = (e) => {
         setEmailValue(e.target.value);
@@ -84,7 +84,7 @@ export function RegistrationForm() {
             }).then((user)=>  {
             saveUser(user);
             setSuccess(true);
-            setOpen(true);
+
 
         }).catch((error) => {
             console.error("Registration error: ", error);
@@ -108,7 +108,7 @@ export function RegistrationForm() {
     return (
         <>
             <div className="login-page">
-                {success && open &&  <FlashMessage />}
+                {/*{success &&  <FlashMessage />}*/}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

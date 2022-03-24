@@ -1,29 +1,25 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {db} from "../helpers/firebase/firebaseConfig";
-import {profileValidationForm} from "../login/formValidation";
 import "./EditUserDataForm.css";
-import {saveUser} from "../helpers/saveUser";
-import {FlashMessage} from "../helpers/alert/FlashMessage";
+import FlashMessage from "../helpers/alert/FlashMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
-import firebase from "firebase/compat/app";
-import firestore from "firebase/compat/app";
 
-const INITIAL_FORM_VALUES = {
-    name: "",
-    birthday: new Date(),
-    profession: "",
-}
+
 
 export function EditUserDataForm({onClose}) {
-
 
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("")
     const [dateOfBirth, setDateOfBirth] = useState("");
-    const [success, setSuccess] = useState(false);
+
+    const [alert, setAlert] = useState({
+        isOpen: false,
+        message:"",
+        type: ""
+    })
     const [errors, setErrors] = useState({
         name: {
             valid: true,
@@ -52,7 +48,12 @@ export function EditUserDataForm({onClose}) {
             birthday: dateOfBirth,
             profession: profession
         }).catch((error) => {
-            console.error("Error adding document: ", error);
+            console.log(error.message);
+            setAlert({
+                isOpen: true,
+                message:"Error has happened",
+                type: "error"
+            });
         });
     }
 
@@ -64,9 +65,16 @@ export function EditUserDataForm({onClose}) {
         if (user.uid) {
             updateUser(user.uid);
         }
-        setSuccess(true);
+        //setSuccess(true);
         resetForm();
         onClose();
+        setAlert({
+            isOpen: true,
+            message: "User data was successfully updated!",
+            type: "success"
+        })
+
+
     }
 
     const resetForm = () => {
@@ -77,8 +85,8 @@ export function EditUserDataForm({onClose}) {
 
     return (
         <>
+            <FlashMessage alert={alert} setAlert={setAlert}/>
             <div className="update-page">
-                {success && <FlashMessage/>}
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
