@@ -3,14 +3,16 @@ import {TextField, Button} from "@mui/material";
 import {formValidationLogin, signupValidation} from "../login/formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+   import AdapterDateFns from '@mui/lab/AdapterDateFns';
+   import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import {db} from "../helpers/firebase/firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
 import {saveUser} from "../helpers/saveUser";
+
 import FlashMessage from "../helpers/alert/FlashMessage";
+
 
 let pass = "";
 
@@ -21,9 +23,11 @@ export function RegistrationForm() {
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
+
   const [success, setSuccess] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({
+
         email: {
             valid: true,
             text: ""
@@ -32,8 +36,8 @@ export function RegistrationForm() {
             valid: true,
             text: ""
         },
-       });
-  const [passErrors, setPassErrors] = useState({
+       })
+    const [passErrors, setPassErrors] = useState({
         confirmPassword: {
             valid: true,
             text: ""
@@ -71,8 +75,8 @@ export function RegistrationForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!passErrors.confirmPassword.valid !== false){
-        return;
+     if(!passErrors.confirmPassword.valid !== false){
+     return;
      }
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then((cred) => {
@@ -80,17 +84,16 @@ export function RegistrationForm() {
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
+                    todos: todos
                 })
             }).then((user)=>  {
             saveUser(user);
             setSuccess(true);
 
 
-        }).catch((error) => {
-            console.error("Registration error: ", error);
-        });
-            navigate('/login');
-            resetForm();
+        })
+        navigate('/login');
+        resetForm();
 
         }
 

@@ -1,29 +1,53 @@
 import React,{useState, useEffect}from  "react";
+import shortid from 'shortid';
 import TodoList from "../todoList/TodoList";
 import TodoEditor from "../todoEditor/TodoEditor";
+
 import {db} from "../../helpers/firebase/firebaseConfig";
 import FlashMessage from "../../helpers/alert/FlashMessage";
 
 
-const TodosMain = () => {
-    const [todos, setTodos] = useState([]);
+
+
+const TodosMain = ()=>{
+    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("todos")) || []);
 
 
     const getTodoData = () => {
         const currentUser = JSON.parse(localStorage.getItem( "userData"));
 
-        db.collection('todo').where("userId", "==", currentUser.uid).get().then(snapshot => {
-            const userTodos = snapshot.docs.map(doc => {
-                return { id: doc.id, ...doc.data() }
-            });
 
-            setTodos(userTodos);
-        }).catch((error) => {
-            console.error("Error getting document: ", error);
-        });
-    }
+    const addTodo = (text) => {
+        const newTodos = {
+            id: shortid.generate(),
+            text: text,
+            isCompleted: false,
+            filter: "",
+        };
+        setTodos([newTodos, ...todos]);
+        window.localStorage.setItem( "todos", JSON.stringify(newTodos))
+    };
+
 
     useEffect(() => {
+
+        localStorage.setItem( "todos", JSON.stringify(todos));
+    }, [todos])
+
+
+    const deleteTodo = todoId => {
+        const deleteTodo = todos.filter(todo => todo.id !== todoId);
+        setTodos(deleteTodo);
+    };
+
+    const toggleCompleted = todoId => {
+
+        const toggle = todos.map((todo) =>
+            todo.id === todoId ? { ...todos, isCompleted : !todos.isCompleted } : {...todos} )
+
+        setTodos(toggle);
+
+
         getTodoData();
     }, [])
 
@@ -70,7 +94,9 @@ const TodosMain = () => {
 
             console.error("Error updating document: ", error);
         });
+
     }
+
 
     return (
 

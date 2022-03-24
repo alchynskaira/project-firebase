@@ -9,7 +9,9 @@ import DatePicker from "@mui/lab/DatePicker";
 
 
 
+
 export function EditUserDataForm({onClose}) {
+
 
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("")
@@ -43,45 +45,53 @@ export function EditUserDataForm({onClose}) {
     }
 
     function updateUser(uid) {
+
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
             profession: profession
+
+        })
+
         }).catch((error) => {
             console.log(error.message);
-            setAlert({
-                isOpen: true,
-                message:"Error has happened",
-                type: "error"
-            });
+          
         });
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const user = JSON.parse(localStorage.getItem("userData"));
-
+        console.log(user, "69")
         if (user.uid) {
             updateUser(user.uid);
         }
+
+        setSuccess(true);
+        //resetForm()
+
         //setSuccess(true);
         resetForm();
+
         onClose();
-        setAlert({
-            isOpen: true,
-            message: "User data was successfully updated!",
-            type: "success"
-        })
+        
 
 
     }
-
-    const resetForm = () => {
-        setName('');
-        setProfession("");
-        setDateOfBirth("");
-    };
+    //
+    // const changeField = (field, value) => {
+    //     setFormValues({
+    //         ...formValues,
+    //         [field]:value,
+    //     });
+    //  setErrors(profileValidationForm(field, value));
+    //
+    // }
+    //
+    // const resetForm = () => {
+    //     setFormValues(INITIAL_FORM_VALUES);
+    // };
 
     return (
         <>
