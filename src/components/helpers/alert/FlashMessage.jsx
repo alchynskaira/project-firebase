@@ -1,11 +1,14 @@
 import React from "react";
 import {Alert} from "@mui/material";
+import { useAlertContext } from "../alertContextProvider";
 
 
-export default function  FlashMessage ({message, type, isOpen})  {
-
+export default function  FlashMessage ()  {
+    const {alertData} = useAlertContext();
 
     return (
-        <Alert variant="filled" severity={type} isOpen={isOpen} message={message} autoHideDuration={3000}>{message}</Alert>
+      <div>
+          {alertData.isShown && <Alert variant="outlined" severity={alertData.type}>{alertData.text}</Alert>}
+      </div>
     );
 }

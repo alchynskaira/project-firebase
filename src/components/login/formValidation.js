@@ -50,7 +50,7 @@ const createMaxMinLengthError = (fieldName, min, max) =>
     return errors;
 };
 
- export const signupValidation =(password, confirmPassword) => {
+ export const signupValidation = (password, confirmPassword) => {
      const errors = {
          confirmPassword: {
              valid:true,

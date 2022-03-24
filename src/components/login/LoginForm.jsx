@@ -7,6 +7,7 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 import {saveUser} from "../helpers/saveUser";
 import FlashMessage from "../helpers/alert/FlashMessage";
 import "./Login.css";
+import { useAlertContext } from "../helpers/alertContextProvider";
 
 
 
@@ -14,6 +15,13 @@ export function LoginForm() {
     let navigate = useNavigate();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
+    const [alert, setAlert] = useState({
+        isOpen: false,
+        message:"",
+        type: ""
+    })
+
+    const { showAlert } = useAlertContext()
 
     const [errors, setErrors] = useState({
         email: {
@@ -47,6 +55,7 @@ export function LoginForm() {
                 const {user} = response;
                 saveUser(user);
 
+                showAlert('success', 'You are successfully logged in')
                 navigate("/home");
             })
             .catch((error) => {
@@ -67,7 +76,7 @@ export function LoginForm() {
     return (
         <>
             <div className="login-page">
-                {/*<FlashMessage  />*/}
+                <FlashMessage />
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
