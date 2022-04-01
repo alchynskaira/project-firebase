@@ -11,10 +11,10 @@ import { saveUser } from "./components/helpers/saveUser";
 import ProfilePage from "./pages/Profile";
 import { AlertContextProvider } from "./components/helpers/alertContextProvider";
 
-// import CircularIndeterminate from "./components/helpers/loader/LoaderSpinner";
 
 
 function App() {
+  let navigate = useNavigate();
   useEffect(() => {
     const auth = getAuth();
 
@@ -23,6 +23,7 @@ function App() {
         saveUser(user);
 
       } else {
+        navigate("/login");
         console.log("user is not logged in");
       }
     });
@@ -38,7 +39,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegistrationPage />} />
             <Route path="profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-            <Route path="home" element={<PrivateRoute> <HomePage /> </PrivateRoute>} />
+            <Route path="home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
           </Routes>
         </Container>
       </AlertContextProvider>

@@ -12,3 +12,14 @@
 .form-control{
     margin-top: 5px;
 }
+
+.btn-login.btn{
+    width: 150px;
+    margin-top: 30px;
+    background-color: #1976d2;
+}
+
+
+ .btn-login.btn:hover{
+    background-color: rgb(22, 106, 197);
+}

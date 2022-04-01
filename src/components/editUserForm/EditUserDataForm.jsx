@@ -15,6 +15,7 @@ export function EditUserDataForm({onClose}) {
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
+    const [avatar, setAvatar] = useState('');
     const [errors, setErrors] = useState({
         name: {
             valid: true,
@@ -36,12 +37,16 @@ export function EditUserDataForm({onClose}) {
     const handleProfession = (e) => {
         setProfession(e.target.value);
     }
+    const handleAvatar = (e) => {
+        setAvatar(e.target.value);
+    }
 
     function updateUser(uid) {
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
-            profession: profession
+            profession: profession,
+            avatar: avatar
         }).then( () => {
             showAlert('success', 'User successfully updated');
         }).catch((error) => {
@@ -67,6 +72,7 @@ export function EditUserDataForm({onClose}) {
         setName('');
         setProfession("");
         setDateOfBirth("");
+        setAvatar('');
     };
 
     return (
@@ -122,12 +128,25 @@ export function EditUserDataForm({onClose}) {
                                            placeholder="Edit your profession"
                                            value={profession}
                                            onChange={handleProfession}
-                                           required
                                 />
                             </label>
                         </div>
                         {!errors.profession.valid && <p className="error">{errors.profession.text}</p>}
-                        <Button variant="contained" type="submit" className="btn-signup btn">
+                        <div className="form-group">
+                            <label className="update-label">Avatar
+                                <TextField fullWidth
+                                           name="avatar"
+                                           type="text"
+                                           autoComplete="off"
+                                           className="form-control"
+                                           id="avatar"
+                                           placeholder="Edit your avatar"
+                                           value={avatar}
+                                           onChange={handleAvatar}
+                                />
+                            </label>
+                        </div>
+                        <Button variant="contained" size="large" type="submit" className="btn-login btn">
                             Update
                         </Button>
                     </div>

@@ -77,9 +77,9 @@ const TodosMain = () => {
     }
 
     return (
-
+        <>
+        <AlertMessage/>
         <div className="container">
-            <AlertMessage/>
             <h1 className="title">TODO LIST</h1>
             <TodoEditor
                 onSubmit={addTodo}
@@ -89,8 +89,8 @@ const TodosMain = () => {
                 onDeleteTodo={deleteTodo}
                 onToggleCompleted={toggleCompleted}
             />
-
         </div>
+        </>
     );
 }
 

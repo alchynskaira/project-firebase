@@ -18,6 +18,7 @@ let pass = "";
 export function RegistrationForm() {
   const navigate = useNavigate();
   const { showAlert } = useAlertContext();
+  const [avatarValue, setAvatarValue] = useState( "");
   const [emailValue, setEmailValue] = useState( "");
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmValue, setConfirmValue] = useState("");
@@ -68,6 +69,10 @@ export function RegistrationForm() {
         setProfessionValue(e.target.value);
     };
 
+    const setRegistrationAvatar = (e) => {
+        setAvatarValue(e.target.value);
+    }
+
 
 
     const handleSubmit = (e) => {
@@ -79,13 +84,14 @@ export function RegistrationForm() {
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then((cred) => {
                 return db.collection("user").doc(cred.user.uid).set({
+                    avatar:avatarValue,
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
                 })
             }).then((user)=>  {
             saveUser(user);
-            showAlert('success', 'You are successfully registered')
+            showAlert('success', 'You are successfully registered');
             setSuccess(true);
 
 
@@ -208,6 +214,21 @@ export function RegistrationForm() {
                                            placeholder="Enter Profession"
                                            value={professionValue}
                                            onChange={setRegistrationProfession}
+                                           required
+                                />
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <label className="register-label">Avatar
+                                <TextField fullWidth
+                                           name="avatar"
+                                           type="text"
+                                           autoComplete="off"
+                                           className="form-control"
+                                           id="avatar"
+                                           placeholder="Avatar link"
+                                           value={avatarValue}
+                                           onChange={setRegistrationAvatar}
                                            required
                                 />
                             </label>

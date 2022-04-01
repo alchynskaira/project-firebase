@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
             margin: "32px auto",
-            height: "400px",
-            width:"500px",
+            height: "500px"
         },
         bcgImage: {
             opacity: "0.10",
@@ -29,14 +28,12 @@ const useStyles = makeStyles((theme) =>
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "centre",
-            height:"600px",
             width: "100%",
 
         },
         content: {
-            backgroundImage: "url(https://picsum.photos/500/194)",
+            backgroundImage: "url(https://picsum.photos/600/900)",
             width:"100%",
-            marginBottom:"15px",
             color: "white",
             backgroundRepeat: "no-repeat",
             display: "flex",
@@ -55,23 +52,39 @@ const useStyles = makeStyles((theme) =>
 
         },
         title: {
-         fontSize: "18px",
-         fontWeight: "500",
-            color: "white",
+         fontSize: "20px",
+         fontWeight: "600",
+            color: "#363636",
+            marginBottom: "20px",
         },
         profileButton:{
-            marginLeft: '90px',
-            backgroundColor:"white",
-
+            margin: 'auto',
+            marginTop: "40px",
+            backgroundColor:"#1976d2",
+            width: "200px",
+            height: "50px",
+            fontWeight:"500",
+            fontSize: "16px",
+            color: "white",
+            '&:hover': {
+                backgroundColor: "rgb(22, 106, 197)",
+            }
         },
         icons: {
             color: "darkgray",
-
         },
-        cardBox: {
-            width:"500px",
-            height:"600px",
-            margin: "32px auto",
+        cardContent: {
+            marginBottom: '30px',
+            textAlign: "center",
+        },
+        avatar: {
+            margin: "0",
+            width: "120px",
+            height: "120px"
+        },
+        cardHeader: {
+            width: "120px",
+            height: "120px"
         }
     })
 );
@@ -113,41 +126,35 @@ export default function UserCard() {
 
     return (
 
-        <div className={classes.cardBox}>
+        <div>
             <AlertMessage/>
             { modalOpen && <Modal onClose={onModalClose}/> }
-                    <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
+                    <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
-                        <CardHeader
+                        <CardHeader className={classes.cardHeader}
                             avatar={
                                 <Avatar
-                                    className="avatar"
+                                    className={classes.avatar}
                                     alt="Remy Sharp"
                                     src={user?.avatar}
-                                    sx={{width: 68, height: 68}}
+                                    sx={{width: 120, height: 120}}
                                 />
                             }
                         />
-                            <CardContent >
+                            <CardContent  className={classes.cardContent}>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    {user?.name}
+                                   Name: {user?.name}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
                                     Profession: {user?.profession}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    Birthday: {user?.birthday}
+                                    Date of birth: {user?.birthday}
                                 </Typography>
                             </CardContent>
                         </div>
                         <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites" className={classes.icons}>
-                                <FavoriteIcon/>
-                            </IconButton>
-                            <IconButton aria-label="mailto:email@email.com" className={classes.icons}>
-                                <EmailIcon/>
-                            </IconButton>
-                            <Button variant="contained" size="small" className={classes.profileButton} onClick={() => setModalOpen(true)}>
+                            <Button  variant="contained" size="large" className={classes.profileButton}  onClick={() => setModalOpen(true)}>
                                 Update user
                             </Button>
                         </CardActions>
