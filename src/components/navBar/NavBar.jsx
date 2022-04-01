@@ -17,7 +17,8 @@ import "./NavBar.css";
 export  function NavBar() {
      const navigate = useNavigate();
      const isAuthenticated =  getUserState();
-     const [isLoading, setIsLoading] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(false);
 
      const handleLogoutClick = () => {
          const auth = getAuth();
@@ -42,7 +43,7 @@ export  function NavBar() {
                         sx={{ mr: 2 }}
                     >
                     </IconButton>
-                    {isAuthenticated  &&  (
+                    {isAuthenticated && isLoading &&  (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
                         </NavLink>

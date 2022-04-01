@@ -3,6 +3,7 @@ import {TextField, Button} from "@mui/material";
 import "../Todos.css";
 
 
+
 const TodoEditor = ({onSubmit}) => {
     const [inputValue, setInputValue] = useState("");
 
@@ -19,10 +20,12 @@ const TodoEditor = ({onSubmit}) => {
     };
 
     return (
+        <div>
         <form className="todoEditor" onSubmit={handleSubmit}>
             <TextField placeholder="Add todo here" className="todoList-input" value={inputValue} onChange={handleChange}>Some text</TextField>
             <Button variant="contained" type="submit" className="todo-btn" onSubmit={onSubmit}>Save</Button>
         </form>
+        </div>
     )
 
 }

@@ -2,24 +2,19 @@ import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {db} from "../helpers/firebase/firebaseConfig";
 import "./EditUserDataForm.css";
-import FlashMessage from "../helpers/alert/FlashMessage";
+import AlertMessage from "../helpers/alert/AlertMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
+import {useAlertContext} from "../helpers/alertContextProvider";
 
 
 
 export function EditUserDataForm({onClose}) {
-
+    const { showAlert } = useAlertContext();
     const [name, setName] = useState("");
-    const [profession, setProfession] = useState("")
+    const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
-
-    const [alert, setAlert] = useState({
-        isOpen: false,
-        message:"",
-        type: ""
-    })
     const [errors, setErrors] = useState({
         name: {
             valid: true,
@@ -47,13 +42,11 @@ export function EditUserDataForm({onClose}) {
             name: name,
             birthday: dateOfBirth,
             profession: profession
+        }).then( () => {
+            showAlert('success', 'User successfully updated');
         }).catch((error) => {
+            showAlert("error", "User data is not updated!");
             console.log(error.message);
-            setAlert({
-                isOpen: true,
-                message:"Error has happened",
-                type: "error"
-            });
         });
     }
 
@@ -65,16 +58,9 @@ export function EditUserDataForm({onClose}) {
         if (user.uid) {
             updateUser(user.uid);
         }
-        //setSuccess(true);
+        showAlert('success', 'User successfully updated');
         resetForm();
         onClose();
-        setAlert({
-            isOpen: true,
-            message: "User data was successfully updated!",
-            type: "success"
-        })
-
-
     }
 
     const resetForm = () => {
@@ -85,7 +71,7 @@ export function EditUserDataForm({onClose}) {
 
     return (
         <>
-            <FlashMessage alert={alert} setAlert={setAlert}/>
+            <AlertMessage />
             <div className="update-page">
                 <form
                     autoComplete="off"

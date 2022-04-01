@@ -12,7 +12,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
 import {db} from "../helpers/firebase/firebaseConfig";
-import FlashMessage from "../helpers/alert/FlashMessage";
+import {useAlertContext} from "../helpers/alertContextProvider";
+import AlertMessage from "../helpers/alert/AlertMessage";
 
 
 const useStyles = makeStyles((theme) =>
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) =>
 
 export default function UserCard() {
     const classes = useStyles();
-
+    const { showAlert } = useAlertContext();
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -93,15 +94,14 @@ export default function UserCard() {
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
 
             setUser(userData);
-
         }
     ).catch((error) => {
+        showAlert('error', 'Something went wrong, cannot get current user!');
         console.error("Error adding document: ", error);
     });
 }
 
     useEffect(() => {
-
         getUserData();
     }, [])
 
@@ -114,7 +114,7 @@ export default function UserCard() {
     return (
 
         <div className={classes.cardBox}>
-            {/*<FlashMessage alert={alert} setAlert={setAlert}/>*/}
+            <AlertMessage/>
             { modalOpen && <Modal onClose={onModalClose}/> }
                     <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>

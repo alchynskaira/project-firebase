@@ -8,6 +8,7 @@ import {saveUser} from "../helpers/saveUser";
 import AlertMessage from "../helpers/alert/AlertMessage";
 import { useAlertContext } from "../helpers/alertContextProvider";
 import "./Login.css";
+import { useAlertContext } from "../helpers/alertContextProvider";
 
 
 
@@ -16,6 +17,13 @@ export function LoginForm() {
     const { showAlert } = useAlertContext();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
+    const [alert, setAlert] = useState({
+        isOpen: false,
+        message:"",
+        type: ""
+    })
+
+    const { showAlert } = useAlertContext()
 
     const [errors, setErrors] = useState({
         email: {
@@ -48,11 +56,15 @@ export function LoginForm() {
             .then((response) => {
                 const {user} = response;
                 saveUser(user);
-                showAlert('success', 'You are successfully logged in!');
+<<<<<<< HEAD
+                showAlert('success', 'You are successfully logged in');
+=======
+
+                showAlert('success', 'You are successfully logged in')
+>>>>>>> 950babd6578de5f1740d920a78fb3566331ea0cb
                 navigate("/home");
             })
             .catch((error) => {
-                showAlert('error', 'You are not logged in, password or email is wrong!');
                 console.log(error);
 
             });
@@ -70,7 +82,11 @@ export function LoginForm() {
     return (
         <>
             <div className="login-page">
+<<<<<<< HEAD
                 <AlertMessage  />
+=======
+                <AlertMessage />
+>>>>>>> 950babd6578de5f1740d920a78fb3566331ea0cb
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

@@ -3,7 +3,7 @@ import {Alert} from "@mui/material";
 import { useAlertContext } from "../alertContextProvider";
 
 
-export default function  FlashMessage ()  {
+export default function  AlertMessage ()  {
     const {alertData} = useAlertContext();
 
     return (

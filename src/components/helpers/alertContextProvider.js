@@ -1,40 +1,40 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const Context = createContext({});
 
 export const AlertContextProvider = ({ children }) => {
-  const [alertData, setAlertData] = useState({});
+    const [alertData, setAlertData] = useState({});
 
-  const showAlert = (type, text) => {
-    setAlertData({
-      isShown: true,
-      type,
-      text
-    });
+    const showAlert = (type, text) => {
+        setAlertData({
+            isShown: true,
+            type,
+            text
+        });
 
-    hideAlert()
-  };
+        hideAlert()
+    };
 
-  const hideAlert = () => {
-    setTimeout(() => {
-      setAlertData({
-        isShown: false,
-        type: '',
-        text: ''
-      });
-    }, 5000)
-  }
+    const hideAlert = () => {
+        setTimeout(() => {
+            setAlertData({
+                isShown: false,
+                type: '',
+                text: ''
+            });
+        }, 5000)
+    }
 
-  return (
-    <Context.Provider
-      value={{
-        alertData,
-        showAlert
-      }}
-    >
-      {children}
-    </Context.Provider>
-  );
+    return (
+        <Context.Provider
+            value={{
+                alertData,
+                showAlert
+            }}
+        >
+            {children}
+        </Context.Provider>
+    );
 };
 
 export const useAlertContext = () => useContext(Context);
