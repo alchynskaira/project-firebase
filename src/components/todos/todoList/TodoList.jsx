@@ -2,13 +2,17 @@ import React from "react";
 import {Checkbox, Button} from "@mui/material";
 import "../Todos.css";
 
+import classNames from "classnames";
+
 const TodoList = ({todos,  onDeleteTodo, onToggleCompleted }) => {
 
   return   (
 
         <ul className="todoList">
             {todos.map((todo) => (
-                <li key={todo.id} className="todoList-item">
+                <li key={todo.id} className={classNames("todoList-item", {
+                    "todoList-item-completed": todo.completed,
+                })}>
                     <div className="contentList-box">
                     <Checkbox
                         type="checkbox"

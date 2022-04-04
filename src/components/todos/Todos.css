@@ -77,14 +77,22 @@
     height: 70px;
 }
 
+
 .todo-text{
     color: rgb(22, 106, 197);
     font-weight: 500;
     text-align: center;
-    margin-right: 70px;
+    margin-left: 24px;
     font-size: 20px;
 
 }
+
+.todoList-item-completed .todo-text {
+    text-decoration: line-through;
+    color: green;
+
+}
+
 
 .todo-btn {
     width: 100px;
@@ -94,6 +102,8 @@
     border: 2px solid rgb(22, 106, 197);
     background-color: rgb(22, 106, 197);
 }
-.todo-checkbox{
 
+.todo-checkbox{
+cursor: pointer;
+    margin-left: 10px;
 }

@@ -4,6 +4,7 @@ const Context = createContext({});
 
 export const AlertContextProvider = ({ children }) => {
     const [alertData, setAlertData] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const showAlert = (type, text) => {
         setAlertData({
@@ -25,11 +26,22 @@ export const AlertContextProvider = ({ children }) => {
         }, 5000)
     }
 
+    const showHideLoading =  {
+       isVisible : (isVisible) => {
+           setLoading(isVisible);
+       }
+    }
+
+
+
+
     return (
         <Context.Provider
             value={{
                 alertData,
-                showAlert
+                showAlert,
+                loading,
+                showHideLoading
             }}
         >
             {children}

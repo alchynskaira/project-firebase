@@ -4,27 +4,31 @@ import TodoEditor from "../todoEditor/TodoEditor";
 import {db} from "../../../firebaseConfig";
 import AlertMessage from "../../alert/AlertMessage";
 import {useAlertContext} from "../../../helpers/alertContextProvider";
+import Loader from "../../loader/Loader";
 
 
 
 const TodosMain = () => {
-    const { showAlert } = useAlertContext();
+    const { showAlert, showHideLoading } = useAlertContext();
     const [todos, setTodos] = useState([]);
 
 
     const getTodoData = () => {
+        showHideLoading.isVisible(true);
         const currentUser = JSON.parse(localStorage.getItem( "userData"));
-
         db.collection('todo').where("userId", "==", currentUser.uid).get().then(snapshot => {
             const userTodos = snapshot.docs.map(doc => {
                 return { id: doc.id, ...doc.data() }
             });
 
             setTodos(userTodos);
+            showHideLoading.isVisible(false);
         }).catch((error) => {
+            showHideLoading.isVisible(false);
             showAlert("error", "Something went wrong, try again!");
             console.error("Error getting document: ", error);
         });
+
     }
 
     useEffect(() => {
@@ -39,6 +43,7 @@ const TodosMain = () => {
             completed: false,
             userId: currentUser.uid,
         }
+        showHideLoading.isLoading(true);
         db.collection("todo").add(todoItem)
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
@@ -84,11 +89,12 @@ const TodosMain = () => {
             <TodoEditor
                 onSubmit={addTodo}
             />
-            <TodoList
+              <TodoList
                 todos={todos}
                 onDeleteTodo={deleteTodo}
                 onToggleCompleted={toggleCompleted}
             />
+            <Loader/>
         </div>
         </>
     );

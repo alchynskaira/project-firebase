@@ -26,14 +26,13 @@ const useStyles = makeStyles((theme) =>
             opacity: "0.10",
             zIndex: "0",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             backgroundPosition: "centre",
-            width: "100%",
+            width: "400px",
 
         },
         content: {
-            backgroundImage: "url(https://picsum.photos/600/900)",
-            width:"100%",
+            backgroundImage: "url(/image/seaimg.jpg)",
             color: "white",
             backgroundRepeat: "no-repeat",
             display: "flex",
@@ -80,7 +79,8 @@ const useStyles = makeStyles((theme) =>
         avatar: {
             margin: "0",
             width: "120px",
-            height: "120px"
+            height: "120px",
+            backgroundImage: "url(https://www.seekpng.com/ipng/u2q8u2w7e6y3a9a9_avatar-png-transparent-png-royalty-free-default-user/)"
         },
         cardHeader: {
             width: "120px",
@@ -136,7 +136,7 @@ export default function UserCard() {
                                 <Avatar
                                     className={classes.avatar}
                                     alt="Remy Sharp"
-                                    src={user?.avatar}
+                                    src="https://www.clipartmax.com/png/small/123-1236782_these-are-some-cats-avatar-i-drew-during-my-free-time-portrait.png"
                                     sx={{width: 120, height: 120}}
                                 />
                             }
