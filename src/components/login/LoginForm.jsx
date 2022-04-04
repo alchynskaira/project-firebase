@@ -4,9 +4,9 @@ import {formValidationLogin} from "./formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {saveUser} from "../helpers/saveUser";
-import AlertMessage from "../helpers/alert/AlertMessage";
-import { useAlertContext } from "../helpers/alertContextProvider";
+import {saveUser} from "../../helpers/saveUser";
+import AlertMessage from "../alert/AlertMessage";
+import { useAlertContext } from "../../helpers/alertContextProvider";
 import "./Login.css";
 
 
@@ -113,7 +113,10 @@ export function LoginForm() {
                             Submit
                         </Button>
                         <div className="register-box">
-                            <a href="/register" variant="contained" type="submit" className="link-signup btn">
+                            <a href="/register" variant="contained" type="submit" className="link-signup btn"
+                               onClick={(e)=> {
+                                navigate('/register')
+                            }}>
                                 Sign up
                                 {/*< PersonIcon className="user-icon"/>*/}
                             </a>

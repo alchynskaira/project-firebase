@@ -6,12 +6,12 @@ import {auth} from "../../index";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import {db} from "../helpers/firebase/firebaseConfig";
+import {db} from "../../firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
-import {saveUser} from "../helpers/saveUser";
-import AlertMessage from "../helpers/alert/AlertMessage";
-import {useAlertContext} from "../helpers/alertContextProvider";
+import {saveUser} from "../../helpers/saveUser";
+import AlertMessage from "../alert/AlertMessage";
+import {useAlertContext} from "../../helpers/alertContextProvider";
 
 let pass = "";
 

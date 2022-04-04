@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {NavLink, Link} from "react-router-dom";
 import React, {useState} from "react";
-import { getUserState} from "../isAuthenticated";
+import { getUserState} from "../../helpers/isAuthenticated";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";

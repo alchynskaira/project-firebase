@@ -7,9 +7,9 @@ import HomePage from "./pages/HomePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import { PrivateRoute } from "./components/routs";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { saveUser } from "./components/helpers/saveUser";
+import { saveUser } from "./helpers/saveUser";
 import ProfilePage from "./pages/Profile";
-import { AlertContextProvider } from "./components/helpers/alertContextProvider";
+import { AlertContextProvider } from "./helpers/alertContextProvider";
 
 
 
@@ -23,7 +23,7 @@ function App() {
         saveUser(user);
 
       } else {
-        navigate("/login");
+        navigate("/register");
         console.log("user is not logged in");
       }
     });

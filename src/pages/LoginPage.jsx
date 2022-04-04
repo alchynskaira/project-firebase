@@ -1,6 +1,6 @@
 import React from "react";
 import {LoginForm} from "../components/login/LoginForm";
-import {getUserState} from "../components/isAuthenticated";
+import {getUserState} from "../helpers/isAuthenticated";
 
 const LoginPage = () => {
 

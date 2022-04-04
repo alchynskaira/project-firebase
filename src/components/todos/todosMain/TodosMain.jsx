@@ -1,9 +1,9 @@
 import React,{useState, useEffect}from  "react";
 import TodoList from "../todoList/TodoList";
 import TodoEditor from "../todoEditor/TodoEditor";
-import {db} from "../../helpers/firebase/firebaseConfig";
-import AlertMessage from "../../helpers/alert/AlertMessage";
-import {useAlertContext} from "../../helpers/alertContextProvider";
+import {db} from "../../../firebaseConfig";
+import AlertMessage from "../../alert/AlertMessage";
+import {useAlertContext} from "../../../helpers/alertContextProvider";
 
 
 

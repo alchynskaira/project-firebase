@@ -11,9 +11,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import {db} from "../helpers/firebase/firebaseConfig";
-import {useAlertContext} from "../helpers/alertContextProvider";
-import AlertMessage from "../helpers/alert/AlertMessage";
+import {db} from "../../firebaseConfig";
+import {useAlertContext} from "../../helpers/alertContextProvider";
+import AlertMessage from "../alert/AlertMessage";
 
 
 const useStyles = makeStyles((theme) =>

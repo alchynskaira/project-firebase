@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
-import {db} from "../helpers/firebase/firebaseConfig";
+import {db} from "../../firebaseConfig";
 import "./EditUserDataForm.css";
-import AlertMessage from "../helpers/alert/AlertMessage";
+import AlertMessage from "../alert/AlertMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
-import {useAlertContext} from "../helpers/alertContextProvider";
+import {useAlertContext} from "../../helpers/alertContextProvider";
 
 
 

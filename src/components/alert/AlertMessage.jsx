@@ -1,6 +1,6 @@
 import React from "react";
 import {Alert} from "@mui/material";
-import { useAlertContext } from "../alertContextProvider";
+import { useAlertContext } from "../../helpers/alertContextProvider";
 
 
 export default function  AlertMessage ()  {

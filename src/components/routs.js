@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-import {getUserState} from "./isAuthenticated";
+import {getUserState} from "../helpers/isAuthenticated";
 
 export const PrivateRoute = ({children}) => {
     const isAuthenticated = getUserState();
