@@ -113,7 +113,7 @@ export function LoginForm() {
                             Submit
                         </Button>
                         <div className="register-box">
-                            <a href="/register" variant="contained" type="submit" className="link-signup btn"
+                            <a href=""  type="submit" className="link-signup btn"
                                onClick={(e)=> {
                                 navigate('/register')
                             }}>

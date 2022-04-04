@@ -1,7 +1,6 @@
 .container{
-    width: 600px;
-    height: fit-content;
-    padding: 48px 24px;
+    max-width: 600px;
+    padding: 38px 24px;
     position: absolute;
     top: 20%;
     left: 50%;
@@ -18,8 +17,7 @@
 
 
 .todoEditor {
-    margin:  30px auto;
-    width: 550px;
+    margin-top: 25px;
     height: 100px;
     border: 2px solid rgb(22, 106, 197);
     border-radius: 5px;
@@ -41,8 +39,7 @@
     background-color: #ffffff;
 }
 
-.todoList-btn {
-    margin-left: 30px;
+.todoList-btn.button {
     width: 100px;
     height: 30px;
     border: 2px solid rgb(22, 106, 197);
@@ -50,8 +47,11 @@
     background-color:  rgb(22, 106, 197);
 }
 
+.todoList-btn.button:hover{
+    background-color:  rgb(22, 106, 197);
+}
+
 .todoList {
-    width: 700px;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@
     border: 1px solid rgb(22, 106, 197);
     border-radius: 5px;
     text-align: center;
-    margin:  23px;
+    margin:  23px auto;
     width: 550px;
     height: 70px;
 }
@@ -92,9 +92,15 @@
     color: green;
 
 }
+.todo-btn.button{
+    border: 2px solid rgb(22, 106, 197);
+    background-color: rgb(22, 106, 197);
+}
+.todo-btn.button:hover{
+    background-color: rgb(22, 106, 197);
+}
 
-
-.todo-btn {
+.todo-btn  {
     width: 100px;
     height: 30px;
     left: 10px;
@@ -103,7 +109,9 @@
     background-color: rgb(22, 106, 197);
 }
 
-.todo-checkbox{
-cursor: pointer;
+
+
+.todo-checkbox.check{
+    cursor: pointer;
     margin-left: 10px;
 }

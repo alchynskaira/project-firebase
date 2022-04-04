@@ -16,13 +16,13 @@ const TodoList = ({todos,  onDeleteTodo, onToggleCompleted }) => {
                     <div className="contentList-box">
                     <Checkbox
                         type="checkbox"
-                        className="todo-checkbox"
+                        className="todo-checkbox check"
                         checked={todo.completed}
                         onChange={() => onToggleCompleted(todo)}
                     />
                     <p className="todo-text">{todo.title}</p>
                     </div>
-                    <Button type="button" variant="contained" className="todoList-btn" onClick={() => onDeleteTodo(todo.id)}>
+                    <Button type="button" variant="contained" className="todoList-btn button" onClick={() => onDeleteTodo(todo.id)}>
                         Delete
                     </Button>
                 </li>

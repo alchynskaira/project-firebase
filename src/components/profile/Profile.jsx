@@ -14,6 +14,7 @@ import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
+import Loader from "../loader/Loader";
 
 
 const useStyles = makeStyles((theme) =>
@@ -91,7 +92,7 @@ const useStyles = makeStyles((theme) =>
 
 export default function UserCard() {
     const classes = useStyles();
-    const { showAlert } = useAlertContext();
+    const { showAlert, showHideLoading } = useAlertContext();
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -105,7 +106,6 @@ export default function UserCard() {
             const date = userData.birthday.toDate();
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-
             setUser(userData);
         }
     ).catch((error) => {
@@ -128,6 +128,7 @@ export default function UserCard() {
 
         <div>
             <AlertMessage/>
+
             { modalOpen && <Modal onClose={onModalClose}/> }
                     <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>

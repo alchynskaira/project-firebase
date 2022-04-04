@@ -7,11 +7,12 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
+import Loader from "../loader/Loader";
 
 
 
 export function EditUserDataForm({onClose}) {
-    const { showAlert } = useAlertContext();
+    const { showAlert, showHideLoading } = useAlertContext();
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -36,9 +37,7 @@ export function EditUserDataForm({onClose}) {
     const handleProfession = (e) => {
         setProfession(e.target.value);
     }
-    const handleAvatar = (e) => {
-        setAvatar(e.target.value);
-    }
+
 
     function updateUser(uid) {
         db.collection('user').doc(uid).set({
@@ -55,13 +54,14 @@ export function EditUserDataForm({onClose}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        showHideLoading.isVisible(true);
         const user = JSON.parse(localStorage.getItem("userData"));
 
         if (user.uid) {
             updateUser(user.uid);
         }
         showAlert('success', 'User successfully updated');
+        showHideLoading.isVisible(false);
         resetForm();
         onClose();
     }
@@ -75,6 +75,7 @@ export function EditUserDataForm({onClose}) {
     return (
         <>
             <AlertMessage />
+            <Loader/>
             <div className="update-page">
                 <form
                     autoComplete="off"

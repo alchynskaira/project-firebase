@@ -43,7 +43,6 @@ const TodosMain = () => {
             completed: false,
             userId: currentUser.uid,
         }
-        showHideLoading.isLoading(true);
         db.collection("todo").add(todoItem)
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
