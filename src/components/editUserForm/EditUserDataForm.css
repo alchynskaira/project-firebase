@@ -13,10 +13,15 @@
     margin-top: 10px;
 }
 
-.btn-login.btn{
+.btn-edit.button{
+    margin-left: 150px;
     width: 150px;
     margin-top: 30px;
     background-color: #1976d2;
+}
+
+.btn-edit.button:hover{
+    background-color: rgb(22, 106, 197);
 }
 
 

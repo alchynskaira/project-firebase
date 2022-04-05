@@ -54,14 +54,13 @@ export function EditUserDataForm({onClose}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        showHideLoading.isVisible(true);
+
         const user = JSON.parse(localStorage.getItem("userData"));
 
         if (user.uid) {
             updateUser(user.uid);
         }
         showAlert('success', 'User successfully updated');
-        showHideLoading.isVisible(false);
         resetForm();
         onClose();
     }
@@ -75,7 +74,6 @@ export function EditUserDataForm({onClose}) {
     return (
         <>
             <AlertMessage />
-            <Loader/>
             <div className="update-page">
                 <form
                     autoComplete="off"
@@ -130,7 +128,7 @@ export function EditUserDataForm({onClose}) {
                             </label>
                         </div>
                         {!errors.profession.valid && <p className="error">{errors.profession.text}</p>}
-                        <Button variant="contained" size="large" type="submit" className="btn-login btn">
+                        <Button variant="contained" size="large" type="submit" className="btn-edit button">
                             Update
                         </Button>
                     </div>
