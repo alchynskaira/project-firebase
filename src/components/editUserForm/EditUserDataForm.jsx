@@ -38,6 +38,20 @@ export function EditUserDataForm({onClose, user}) {
     console.log(user, "user");
     const classes = useStyles();
     const { showAlert } = useAlertContext();
+    if(typeof(user.birthday) === "string") {
+        let day = user.birthday;
+        day = day.split(".")[0];
+        let month = user.birthday;
+        month = month.split(".")[1];
+        let year = user.birthday;
+        year = year.split(".")[2];
+        const fixedDate = new Date(Date.UTC(parseInt(year), parseInt(month), parseInt(day)));
+        user.birthday =fixedDate;
+        console.log(day, month, year);
+    }
+
+
+    console.log(user);
     const [userUpdateData, setUserUpdateData] = useState(user);
     const [errors, setErrors] = useState({
         name: {
@@ -54,8 +68,8 @@ export function EditUserDataForm({onClose, user}) {
         }
     });
 
-    const setFormData = (key, value) => {
 
+    const setFormData = (key, value) => {
         setUserUpdateData({
             ...userUpdateData,
             [key]: value
