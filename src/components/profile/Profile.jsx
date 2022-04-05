@@ -14,7 +14,7 @@ import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
-import Loader from "../loader/Loader";
+
 
 
 const useStyles = makeStyles((theme) =>

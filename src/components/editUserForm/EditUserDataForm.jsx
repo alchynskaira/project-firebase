@@ -7,12 +7,35 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
-import Loader from "../loader/Loader";
 
+import {createStyles, makeStyles} from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        editLabel: {
+            marginBottom:"5px",
+        },
+        formControlEdit: {
+            marginTop: "5px",
+            marginBottom: "5px"
+        },
+        formGroupEdit: {
+            marginBottom: "10px",
+        },
+        formDateReg: {
+            width: "100%",
+            height: "50px",
+            marginBottom: "10px",
+            marginTop: "10px"
+        }
+    })
+);
 
 
 export function EditUserDataForm({onClose}) {
-    const { showAlert, showHideLoading } = useAlertContext();
+    const classes = useStyles();
+    const { showAlert } = useAlertContext();
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -82,12 +105,12 @@ export function EditUserDataForm({onClose}) {
                 >
                     <h2 className="title">Edit User Data</h2>
                     <div className="flex">
-                        <div className="form-group">
-                            <label className="update-label">Name
+                        <div className={classes.formGroupEdit}>
+                            <label className={classes.editLabel}>Name
                                 <TextField fullWidth
                                            type="text"
                                            autoComplete="off"
-                                           className="form-control"
+                                           className={classes.formControlEdit}
                                            id="name"
                                            placeholder="Edit your name"
                                            value={name}
@@ -96,8 +119,8 @@ export function EditUserDataForm({onClose}) {
                             </label>
                         </div>
                         {!errors.name.valid && <p className="error">{errors.name.text}</p>}
-                        <div className="form-group">
-                            <label className="register-label">Birthday
+                        <div className={classes.formGroupEdit}>
+                            <label className={classes.editLabel}>Birthday
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         views={["year", "month", "day"]}
@@ -107,19 +130,19 @@ export function EditUserDataForm({onClose}) {
                                         onChange={(dateOfBirth) => setDateOfBirth(dateOfBirth)
                                         }
                                         renderInput={(params) =>
-                                            <TextField type="date" {...params} className="date-input"/>}
+                                            <TextField type="date" {...params} className={classes.formDateReg}/>}
                                       />
                                 </LocalizationProvider>
                             </label>
                         </div>
                         {!errors.birthday.valid && <p className="error">{errors.birthday.text}</p>}
-                        <div className="form-group">
-                            <label className="update-label">Profession
+                        <div className={classes.formGroupEdit}>
+                            <label className={classes.editLabel}>Profession
                                 <TextField fullWidth
                                            name="profession"
                                            type="text"
                                            autoComplete="off"
-                                           className="form-control"
+                                           className={classes.formControlEdit}
                                            id="profession"
                                            placeholder="Edit your profession"
                                            value={profession}

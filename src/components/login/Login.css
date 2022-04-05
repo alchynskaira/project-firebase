@@ -28,6 +28,7 @@
     margin-left: 32%;
     width: 150px;
     margin-top: 30px;
+    background-color: #1976d2;
 }
 
 .error-log {
@@ -65,6 +66,10 @@
     flex-direction: row;
     align-items: baseline;
     justify-content: center;
+}
+
+.login-label {
+    margin-bottom: 5px;
 }
 
 
