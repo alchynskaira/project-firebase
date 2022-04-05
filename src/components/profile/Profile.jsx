@@ -11,30 +11,30 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import { format } from 'date-fns'
-import {db} from "../helpers/firebase/firebaseConfig";
-import FlashMessage from "../helpers/alert/FlashMessage";
+import {db} from "../../firebaseConfig";
+import {useAlertContext} from "../../helpers/alertContextProvider";
+import AlertMessage from "../alert/AlertMessage";
+import Loader from "../loader/Loader";
+
 
 
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-             margin: "32px auto",
+            margin: "32px auto",
+            height: "500px"
         },
         bcgImage: {
             opacity: "0.10",
             zIndex: "0",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             backgroundPosition: "centre",
-           height:"100%",
-
+            width: "400px",
         },
         content: {
-            backgroundImage: "url(https://picsum.photos/500/194)",
-            width:"100%",
-           marginBottom:"15px",
+            backgroundImage: "url(/image/seaimg.jpg)",
             color: "white",
             backgroundRepeat: "no-repeat",
             display: "flex",
@@ -53,24 +53,47 @@ const useStyles = makeStyles((theme) =>
 
         },
         title: {
-         fontSize: "18px",
-         fontWeight: "500",
-            color: "white",
+         fontSize: "20px",
+         fontWeight: "600",
+            color: "#363636",
+            marginBottom: "20px",
         },
         profileButton:{
-            marginLeft: '90px',
-            backgroundColor:"white",
-
+            margin: 'auto',
+            marginTop: "40px",
+            backgroundColor:"#1976d2",
+            width: "200px",
+            height: "50px",
+            fontWeight:"500",
+            fontSize: "16px",
+            color: "white",
+            '&:hover': {
+                backgroundColor: "rgb(22, 106, 197)",
+            }
         },
         icons: {
             color: "darkgray",
-
+        },
+        cardContent: {
+            marginBottom: '30px',
+            textAlign: "center",
+        },
+        avatar: {
+            margin: "0",
+            width: "120px",
+            height: "120px",
+            backgroundImage: "url(https://www.seekpng.com/ipng/u2q8u2w7e6y3a9a9_avatar-png-transparent-png-royalty-free-default-user/)"
+        },
+        cardHeader: {
+            width: "120px",
+            height: "120px"
         }
     })
 );
 
 export default function UserCard() {
     const classes = useStyles();
+    const { showAlert, showHideLoading } = useAlertContext();
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -87,20 +110,15 @@ export default function UserCard() {
             const date = userData.birthday.toDate()
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-
-
-
             setUser(userData);
-
         }
-    )
+    ).catch((error) => {
+        showAlert('error', 'Something went wrong, cannot get current user!');
+        console.error("Error adding document: ", error);
+    });
 }
 
     useEffect(() => {
-
-
-
-
         getUserData();
 
     }, [])
@@ -112,47 +130,39 @@ export default function UserCard() {
     }
 
     return (
-        <div className={classes.cardBox}>
-            {/*<FlashMessage alert={alert} setAlert={setAlert}/>*/}
+        <div>
+            <AlertMessage/>
             { modalOpen && <Modal onClose={onModalClose}/> }
-
-                    <Card className={classes.card} sx={{maxWidth: 400, maxHeight: 800}} key={user?.id}>
+                    <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
-                        <CardHeader
+                        <CardHeader className={classes.cardHeader}
                             avatar={
                                 <Avatar
-                                    className="avatar"
+                                    className={classes.avatar}
                                     alt="Remy Sharp"
-                                    src={user?.avatar}
-                                    sx={{width: 68, height: 68}}
+                                    src="https://www.clipartmax.com/png/small/123-1236782_these-are-some-cats-avatar-i-drew-during-my-free-time-portrait.png"
+                                    sx={{width: 120, height: 120}}
                                 />
                             }
                         />
-                            <CardContent >
+                            <CardContent  className={classes.cardContent}>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    {user?.name}
+                                   Name: {user?.name}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
                                     Profession: {user?.profession}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" className={classes.title}>
-                                    Birthday: {user?.birthday}
+                                    Date of birth: {user?.birthday}
                                 </Typography>
                             </CardContent>
                         </div>
                         <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites" className={classes.icons}>
-                                <FavoriteIcon/>
-                            </IconButton>
-                            <IconButton aria-label="mailto:email@email.com" className={classes.icons}>
-                                <EmailIcon/>
-                            </IconButton>
-                            <Button variant="contained" size="small" className={classes.profileButton} onClick={() => setModalOpen(true)}>
+                            <Button  variant="contained" size="large" className={classes.profileButton}  onClick={() => setModalOpen(true)}>
                                 Update user
                             </Button>
                         </CardActions>
                     </Card>
-
         </div>
 
     )

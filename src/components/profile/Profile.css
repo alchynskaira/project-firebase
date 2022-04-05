@@ -1,3 +1,7 @@
 .card{
     background-image: url(https://picsum.photos/500/194);
 }
+
+.profile-btn:hover {
+    background-color: rgb(22, 106, 197);
+}

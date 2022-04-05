@@ -1,27 +1,24 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
-import {db} from "../helpers/firebase/firebaseConfig";
+import {db} from "../../firebaseConfig";
 import "./EditUserDataForm.css";
-import FlashMessage from "../helpers/alert/FlashMessage";
+import AlertMessage from "../alert/AlertMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
+import {useAlertContext} from "../../helpers/alertContextProvider";
+import Loader from "../loader/Loader";
 
 
 
 
 export function EditUserDataForm({onClose}) {
 
+    const { showAlert, showHideLoading } = useAlertContext();
 
     const [name, setName] = useState("");
-    const [profession, setProfession] = useState("")
+    const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
-
-    const [alert, setAlert] = useState({
-        isOpen: false,
-        message:"",
-        type: ""
-    })
     const [errors, setErrors] = useState({
         name: {
             valid: true,
@@ -44,18 +41,18 @@ export function EditUserDataForm({onClose}) {
         setProfession(e.target.value);
     }
 
+
     function updateUser(uid) {
 
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
-            profession: profession
-
-        })
-
+            profession: profession,
+        }).then( () => {
+            showAlert('success', 'User successfully updated');
         }).catch((error) => {
+            showAlert("error", "User data is not updated!");
             console.log(error.message);
-          
         });
 
     }
@@ -63,39 +60,18 @@ export function EditUserDataForm({onClose}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem("userData"));
-        console.log(user, "69")
         if (user.uid) {
             updateUser(user.uid);
         }
-
-        setSuccess(true);
-        //resetForm()
-
-        //setSuccess(true);
+        showAlert('success', 'User successfully updated');
         resetForm();
-
         onClose();
-        
-
 
     }
-    //
-    // const changeField = (field, value) => {
-    //     setFormValues({
-    //         ...formValues,
-    //         [field]:value,
-    //     });
-    //  setErrors(profileValidationForm(field, value));
-    //
-    // }
-    //
-    // const resetForm = () => {
-    //     setFormValues(INITIAL_FORM_VALUES);
-    // };
 
     return (
         <>
-            <FlashMessage alert={alert} setAlert={setAlert}/>
+            <AlertMessage />
             <div className="update-page">
                 <form
                     autoComplete="off"
@@ -146,12 +122,11 @@ export function EditUserDataForm({onClose}) {
                                            placeholder="Edit your profession"
                                            value={profession}
                                            onChange={handleProfession}
-                                           required
                                 />
                             </label>
                         </div>
                         {!errors.profession.valid && <p className="error">{errors.profession.text}</p>}
-                        <Button variant="contained" type="submit" className="btn-signup btn">
+                        <Button variant="contained" size="large" type="submit" className="btn-edit button">
                             Update
                         </Button>
                     </div>

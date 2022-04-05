@@ -9,10 +9,10 @@
 
 .modal-content {
     position: absolute;
-    top:25%;
+    top:40%;
     left:50%;
     transform: translate(-50%, -50%);
-    max-width: 550px;
+    max-width: 500px;
     width: 100%;
     padding: 12px;
     background-color: #fff;

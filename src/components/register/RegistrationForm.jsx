@@ -6,18 +6,20 @@ import {auth} from "../../index";
    import AdapterDateFns from '@mui/lab/AdapterDateFns';
    import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import {db} from "../helpers/firebase/firebaseConfig";
+import {db} from "../../firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
-import {saveUser} from "../helpers/saveUser";
+import {saveUser} from "../../helpers/saveUser";
+import AlertMessage from "../alert/AlertMessage";
+import {useAlertContext} from "../../helpers/alertContextProvider";
 
-import FlashMessage from "../helpers/alert/FlashMessage";
 
 
 let pass = "";
 
 export function RegistrationForm() {
   const navigate = useNavigate();
+  const { showAlert } = useAlertContext();
   const [emailValue, setEmailValue] = useState( "");
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmValue, setConfirmValue] = useState("");
@@ -71,7 +73,6 @@ export function RegistrationForm() {
     };
 
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -88,13 +89,13 @@ export function RegistrationForm() {
                 })
             }).then((user)=>  {
             saveUser(user);
+            showAlert('success', 'You are successfully registered');
             setSuccess(true);
-
-
-        })
-        navigate('/login');
-        resetForm();
-
+        }).catch((error) => {
+            console.error("Registration error: ", error);
+        });
+            navigate('/login');
+            resetForm();
         }
 
     const resetForm = () => {
@@ -111,7 +112,7 @@ export function RegistrationForm() {
     return (
         <>
             <div className="login-page">
-                {/*{success &&  <FlashMessage />}*/}
+                <AlertMessage  />
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

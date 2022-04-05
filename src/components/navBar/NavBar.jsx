@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {NavLink, Link} from "react-router-dom";
 import React, {useState} from "react";
-import { getUserState} from "../isAuthenticated";
+import { getUserState} from "../../helpers/isAuthenticated";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -18,14 +18,11 @@ export  function NavBar() {
      const navigate = useNavigate();
      const isAuthenticated =  getUserState();
 
-    const [isLoading, setIsLoading] = useState(false);
-
      const handleLogoutClick = () => {
          const auth = getAuth();
          signOut(auth).then(() => {
               localStorage.clear();
              navigate("/login");
-             setIsLoading(true);
          }).catch((error) => {
              console.log(error);
          });
@@ -43,13 +40,12 @@ export  function NavBar() {
                         sx={{ mr: 2 }}
                     >
                     </IconButton>
-
-                    {isAuthenticated  &&  (
+                    {isAuthenticated && (
                         <NavLink  exact="true" to="/home" className="navLink">
                             Home
                         </NavLink>
                     )}
-                    {!isAuthenticated  && isLoading &&  (
+                    {!isAuthenticated  &&  (
                         <NavLink   to="/register" className="navLink">
                             Sign up
                         </NavLink>

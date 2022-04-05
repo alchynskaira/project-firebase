@@ -1,6 +1,3 @@
-.login-page {
-    height: auto;
-}
 
 .title {
     text-align: center;
@@ -9,28 +6,26 @@
 
 .login-form {
     margin-top: 50px;
-   margin-left: auto;
+    margin-left: auto;
     margin-right: auto;
     padding: 15px;
-    width: 400px;
-    height: 500px;
+    max-width: 400px;
     border: 1px solid black;
     border-radius: 5px;
 }
 
 .form-control {
     margin-top: 10px;
+    height: 20px;
 }
 
 .form-group {
     padding: 10px;
     margin-bottom: 20px;
     outline: none;
-
-
 }
 .btn-login.btn{
-margin-left: 32%;
+    margin-left: 32%;
     width: 150px;
     margin-top: 30px;
 }

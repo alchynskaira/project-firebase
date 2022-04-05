@@ -4,14 +4,16 @@ import {formValidationLogin} from "./formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {saveUser} from "../helpers/saveUser";
-import FlashMessage from "../helpers/alert/FlashMessage";
+import {saveUser} from "../../helpers/saveUser";
+import AlertMessage from "../alert/AlertMessage";
+import { useAlertContext } from "../../helpers/alertContextProvider";
 import "./Login.css";
 
 
 
 export function LoginForm() {
     let navigate = useNavigate();
+    const { showAlert } = useAlertContext();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
 
@@ -46,10 +48,11 @@ export function LoginForm() {
             .then((response) => {
                 const {user} = response;
                 saveUser(user);
-
+                showAlert('success', 'You are successfully logged in!');
                 navigate("/home");
             })
             .catch((error) => {
+                showAlert('error', 'You are not logged in, password or email is wrong!');
                 console.log(error);
 
             });
@@ -67,7 +70,7 @@ export function LoginForm() {
     return (
         <>
             <div className="login-page">
-                {/*<FlashMessage  />*/}
+                <AlertMessage  />
                 <form
                     autoComplete="off"
                     onSubmit={handleSubmit}
@@ -110,7 +113,10 @@ export function LoginForm() {
                             Submit
                         </Button>
                         <div className="register-box">
-                            <a href="/register" variant="contained" type="submit" className="link-signup btn">
+                            <a href=""  type="submit" className="link-signup btn"
+                               onClick={(e)=> {
+                                navigate('/register')
+                            }}>
                                 Sign up
                                 {/*< PersonIcon className="user-icon"/>*/}
                             </a>
