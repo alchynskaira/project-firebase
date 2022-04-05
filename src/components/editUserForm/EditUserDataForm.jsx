@@ -11,8 +11,11 @@ import Loader from "../loader/Loader";
 
 
 
+
 export function EditUserDataForm({onClose}) {
+
     const { showAlert, showHideLoading } = useAlertContext();
+
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -40,6 +43,7 @@ export function EditUserDataForm({onClose}) {
 
 
     function updateUser(uid) {
+
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
@@ -50,26 +54,20 @@ export function EditUserDataForm({onClose}) {
             showAlert("error", "User data is not updated!");
             console.log(error.message);
         });
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const user = JSON.parse(localStorage.getItem("userData"));
-
         if (user.uid) {
             updateUser(user.uid);
         }
         showAlert('success', 'User successfully updated');
         resetForm();
         onClose();
-    }
 
-    const resetForm = () => {
-        setName('');
-        setProfession("");
-        setDateOfBirth("");
-    };
+    }
 
     return (
         <>

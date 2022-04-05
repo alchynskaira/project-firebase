@@ -18,8 +18,6 @@ export  function NavBar() {
      const navigate = useNavigate();
      const isAuthenticated =  getUserState();
 
-
-
      const handleLogoutClick = () => {
          const auth = getAuth();
          signOut(auth).then(() => {
@@ -63,6 +61,7 @@ export  function NavBar() {
                     {isAuthenticated && ( <Link to="/profile" className="navLink" >
                         <AccountBoxIcon className="icon-profile"/>
                     </Link>)}
+
                 </Toolbar>
             </AppBar>
         </Box>

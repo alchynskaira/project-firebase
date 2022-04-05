@@ -1,4 +1,5 @@
 import React,{useState, useEffect}from  "react";
+import shortid from 'shortid';
 import TodoList from "../todoList/TodoList";
 import TodoEditor from "../todoEditor/TodoEditor";
 import {db} from "../../../firebaseConfig";
@@ -11,7 +12,6 @@ import Loader from "../../loader/Loader";
 const TodosMain = () => {
     const { showAlert, showHideLoading } = useAlertContext();
     const [todos, setTodos] = useState([]);
-
 
     const getTodoData = () => {
         showHideLoading.isVisible(true);
@@ -32,6 +32,24 @@ const TodosMain = () => {
     }
 
     useEffect(() => {
+
+        localStorage.setItem( "todos", JSON.stringify(todos));
+    }, [todos])
+
+
+    const deleteTodo = todoId => {
+        const deleteTodo = todos.filter(todo => todo.id !== todoId);
+        setTodos(deleteTodo);
+    };
+
+    const toggleCompleted = todoId => {
+
+        const toggle = todos.map((todo) =>
+            todo.id === todoId ? { ...todos, isCompleted : !todos.isCompleted } : {...todos} )
+
+        setTodos(toggle);
+
+
         getTodoData();
     }, [])
 
@@ -78,7 +96,9 @@ const TodosMain = () => {
             showAlert("error", "Something went wrong, try again!");
             console.error("Error updating document: ", error);
         });
+
     }
+
 
     return (
         <>
