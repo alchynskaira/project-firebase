@@ -5,10 +5,7 @@ import {Button} from "@material-ui/core";
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import EmailIcon from '@mui/icons-material/Email';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
@@ -93,15 +90,13 @@ const useStyles = makeStyles((theme) =>
 
 export default function UserCard() {
     const classes = useStyles();
-    const { showAlert, showHideLoading } = useAlertContext();
+    const { showAlert } = useAlertContext();
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
 
 
 
     const getUserData = () => {
-
-
     const userData = JSON.parse(localStorage.getItem( "userData"));
 
     db.collection('user').doc(userData.uid).get().then(snapshot => {
@@ -118,9 +113,9 @@ export default function UserCard() {
     });
 }
 
+
     useEffect(() => {
         getUserData();
-
     }, [])
 
 
@@ -132,7 +127,7 @@ export default function UserCard() {
     return (
         <div>
             <AlertMessage/>
-            { modalOpen && <Modal onClose={onModalClose}/> }
+            { modalOpen && <Modal onClose={onModalClose} user={user}/> }
                     <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
                         <CardHeader className={classes.cardHeader}

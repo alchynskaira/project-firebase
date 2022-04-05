@@ -7,8 +7,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
-
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+
 
 
 const useStyles = makeStyles((theme) =>
@@ -34,13 +34,11 @@ const useStyles = makeStyles((theme) =>
 
 
 
-export function EditUserDataForm({onClose}) {
+export function EditUserDataForm({onClose, user}) {
+    console.log(user, "user");
     const classes = useStyles();
     const { showAlert } = useAlertContext();
-
-    const [name, setName] = useState("");
-    const [profession, setProfession] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [userUpdateData, setUserUpdateData] = useState(user);
     const [errors, setErrors] = useState({
         name: {
             valid: true,
@@ -56,21 +54,21 @@ export function EditUserDataForm({onClose}) {
         }
     });
 
-    const handleName = (e) => {
-        setName(e.target.value);
-    }
-    const handleProfession = (e) => {
-        setProfession(e.target.value);
+    const setFormData = (key, value) => {
+
+        setUserUpdateData({
+            ...userUpdateData,
+            [key]: value
+        })
+        console.log(key, value)
+          console.log(userUpdateData);
     }
 
 
     function updateUser(uid) {
-
-        db.collection('user').doc(uid).set({
-            name: name,
-            birthday: dateOfBirth,
-            profession: profession,
-        }).then( () => {
+        db.collection('user').doc(uid).set(
+            userUpdateData
+        ).then( () => {
             showAlert('success', 'User successfully updated');
         }).catch((error) => {
             showAlert("error", "User data is not updated!");
@@ -109,8 +107,8 @@ export function EditUserDataForm({onClose}) {
                                            className={classes.formControlEdit}
                                            id="name"
                                            placeholder="Edit your name"
-                                           value={name}
-                                           onChange={handleName}
+                                           value={userUpdateData.name}
+                                           onChange={(e) => setFormData("name", e.target.value)}
                                 />
                             </label>
                         </div>
@@ -121,10 +119,9 @@ export function EditUserDataForm({onClose}) {
                                     <DatePicker
                                         views={["year", "month", "day"]}
                                         format={'DD/MM/YYYY'}
-                                        value={dateOfBirth}
+                                        value={userUpdateData.birthday}
                                         KeyboardButtonProps={{"aria-label": "change date"}}
-                                        onChange={(dateOfBirth) => setDateOfBirth(dateOfBirth)
-                                        }
+                                        onChange={(birthday) => setFormData("birthday", birthday)}
                                         renderInput={(params) =>
                                             <TextField type="date" {...params} className={classes.formDateReg}/>}
                                       />
@@ -141,8 +138,8 @@ export function EditUserDataForm({onClose}) {
                                            className={classes.formControlEdit}
                                            id="profession"
                                            placeholder="Edit your profession"
-                                           value={profession}
-                                           onChange={handleProfession}
+                                           value={userUpdateData.profession}
+                                           onChange={(e) => setFormData("profession", e.target.value)}
                                 />
                             </label>
                         </div>
