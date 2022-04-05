@@ -1,5 +1,5 @@
 import React from "react";
-import {Checkbox, Button} from "@mui/material";
+import Todo from "../todo/Todo";
 import "../Todos.css";
 
 import classNames from "classnames";
@@ -29,7 +29,5 @@ const TodoList = ({todos,  onDeleteTodo, onToggleCompleted }) => {
             ))}
         </ul>
     );
-}
-
 
 export default TodoList;

@@ -3,8 +3,8 @@ import {TextField, Button} from "@mui/material";
 import {formValidationLogin, signupValidation} from "../login/formValidation";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../index";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+   import AdapterDateFns from '@mui/lab/AdapterDateFns';
+   import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import {db} from "../../firebaseConfig";
 import {createUserWithEmailAndPassword} from "firebase/auth";
@@ -12,7 +12,13 @@ import  "./Registration.css";
 import {saveUser} from "../../helpers/saveUser";
 import AlertMessage from "../alert/AlertMessage";
 import {useAlertContext} from "../../helpers/alertContextProvider";
+<<<<<<< HEAD
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+=======
+
+
+
+>>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
 let pass = "";
 
 const useStyles = makeStyles((theme) =>
@@ -44,8 +50,14 @@ export function RegistrationForm() {
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
+<<<<<<< HEAD
+=======
+
+  const [success, setSuccess] = useState(false);
+>>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({
+
         email: {
             valid: true,
             text: ""
@@ -54,8 +66,8 @@ export function RegistrationForm() {
             valid: true,
             text: ""
         },
-       });
-  const [passErrors, setPassErrors] = useState({
+       })
+    const [passErrors, setPassErrors] = useState({
         confirmPassword: {
             valid: true,
             text: ""
@@ -92,8 +104,8 @@ export function RegistrationForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!passErrors.confirmPassword.valid !== false){
-        return;
+     if(!passErrors.confirmPassword.valid !== false){
+     return;
      }
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then((cred) => {
@@ -101,6 +113,7 @@ export function RegistrationForm() {
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
+                    todos: todos
                 })
             }).then((user)=>  {
             saveUser(user);
@@ -110,7 +123,6 @@ export function RegistrationForm() {
         });
             navigate('/login');
             resetForm();
-
         }
 
     const resetForm = () => {

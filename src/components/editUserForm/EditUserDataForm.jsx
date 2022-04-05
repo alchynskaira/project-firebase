@@ -33,9 +33,16 @@ const useStyles = makeStyles((theme) =>
 );
 
 
+
 export function EditUserDataForm({onClose}) {
+<<<<<<< HEAD
     const classes = useStyles();
     const { showAlert } = useAlertContext();
+=======
+
+    const { showAlert, showHideLoading } = useAlertContext();
+
+>>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -63,6 +70,7 @@ export function EditUserDataForm({onClose}) {
 
 
     function updateUser(uid) {
+
         db.collection('user').doc(uid).set({
             name: name,
             birthday: dateOfBirth,
@@ -73,26 +81,20 @@ export function EditUserDataForm({onClose}) {
             showAlert("error", "User data is not updated!");
             console.log(error.message);
         });
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const user = JSON.parse(localStorage.getItem("userData"));
-
         if (user.uid) {
             updateUser(user.uid);
         }
         showAlert('success', 'User successfully updated');
         resetForm();
         onClose();
-    }
 
-    const resetForm = () => {
-        setName('');
-        setProfession("");
-        setDateOfBirth("");
-    };
+    }
 
     return (
         <>

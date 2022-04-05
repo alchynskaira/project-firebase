@@ -5,12 +5,11 @@
     max-width: 600px;
     padding: 38px 24px;
     border-radius: 18px;
-    border: 2px solid rgb(22, 106, 197);
+    border: 1px solid rgb(22, 106, 197);
 
 }
 .title {
     text-align: center;
-    color: rgb(22, 106, 197);
 }
 
 
@@ -37,8 +36,12 @@
 }
 
 .todoList-btn.button {
+<<<<<<< HEAD
     margin-right: 10px;
+=======
+>>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
     height: 30px;
+    margin-left: 10px;
     border: 2px solid rgb(22, 106, 197);
     border-radius: 3px;
     background-color:  rgb(22, 106, 197);
@@ -54,26 +57,22 @@
     flex-direction: column;
     justify-content: center;
     padding: 0;
-}
 
-.contentList-box{
-    display: flex;
-    flex-direction: row;
-    width: 435px;
+
 }
 
 .todoList-item {
+    justify-content: space-between;
     display: flex;
     flex-direction: row;
     align-items: center;
     border: 1px solid rgb(22, 106, 197);
     border-radius: 5px;
     text-align: center;
+
     margin-bottom:  20px;
     max-width: 700px;
     height: 70px;
-}
-
 
 .todo-text{
     color: rgb(22, 106, 197);
@@ -81,7 +80,6 @@
     text-align: center;
     margin-left: 24px;
     font-size: 20px;
-
 }
 
 .todoList-item-completed .todo-text {
@@ -111,9 +109,8 @@
     background-color: rgb(22, 106, 197);
 }
 
-
-
 .todo-checkbox.check{
     cursor: pointer;
     margin-left: 10px;
+
 }

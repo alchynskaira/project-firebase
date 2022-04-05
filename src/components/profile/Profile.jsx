@@ -17,6 +17,8 @@ import AlertMessage from "../alert/AlertMessage";
 
 
 
+
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
@@ -30,7 +32,6 @@ const useStyles = makeStyles((theme) =>
             backgroundSize: "contain",
             backgroundPosition: "centre",
             width: "400px",
-
         },
         content: {
             backgroundImage: "url(/image/seaimg.jpg)",
@@ -97,13 +98,16 @@ export default function UserCard() {
     const [modalOpen, setModalOpen] = useState(false);
 
 
+
     const getUserData = () => {
+
 
     const userData = JSON.parse(localStorage.getItem( "userData"));
 
     db.collection('user').doc(userData.uid).get().then(snapshot => {
+
             const userData = snapshot.data();
-            const date = userData.birthday.toDate();
+            const date = userData.birthday.toDate()
             userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
                 ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
             setUser(userData);
@@ -116,19 +120,18 @@ export default function UserCard() {
 
     useEffect(() => {
         getUserData();
+
     }, [])
 
 
     const onModalClose = () => {
-        getUserData();
+    getUserData()
         setModalOpen(false);
     }
 
     return (
-
         <div>
             <AlertMessage/>
-
             { modalOpen && <Modal onClose={onModalClose}/> }
                     <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
@@ -160,7 +163,6 @@ export default function UserCard() {
                             </Button>
                         </CardActions>
                     </Card>
-
         </div>
 
     )
