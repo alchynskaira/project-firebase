@@ -35,14 +35,9 @@ const useStyles = makeStyles((theme) =>
 
 
 export function EditUserDataForm({onClose}) {
-<<<<<<< HEAD
     const classes = useStyles();
     const { showAlert } = useAlertContext();
-=======
 
-    const { showAlert, showHideLoading } = useAlertContext();
-
->>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
     const [name, setName] = useState("");
     const [profession, setProfession] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -91,7 +86,6 @@ export function EditUserDataForm({onClose}) {
             updateUser(user.uid);
         }
         showAlert('success', 'User successfully updated');
-        resetForm();
         onClose();
 
     }

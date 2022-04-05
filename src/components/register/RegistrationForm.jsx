@@ -12,13 +12,8 @@ import  "./Registration.css";
 import {saveUser} from "../../helpers/saveUser";
 import AlertMessage from "../alert/AlertMessage";
 import {useAlertContext} from "../../helpers/alertContextProvider";
-<<<<<<< HEAD
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-=======
 
-
-
->>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
 let pass = "";
 
 const useStyles = makeStyles((theme) =>
@@ -50,11 +45,6 @@ export function RegistrationForm() {
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
-<<<<<<< HEAD
-=======
-
-  const [success, setSuccess] = useState(false);
->>>>>>> 02af9d7176607e8623e632bf2b56e06f9d5e7f09
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({
 
@@ -113,7 +103,6 @@ export function RegistrationForm() {
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
-                    todos: todos
                 })
             }).then((user)=>  {
             saveUser(user);
