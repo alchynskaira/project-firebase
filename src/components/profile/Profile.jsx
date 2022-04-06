@@ -11,7 +11,7 @@ import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
-import {dateFormatting} from "../helpers/DateFotmatting/DateFormatting";
+import {dateFormatting} from "../helpers/dateFotmatting/dateFormatting";
 
 
 
@@ -104,7 +104,7 @@ export default function UserCard() {
     db.collection('user').doc(userDataFromLocalstorage.uid).get().then(snapshot => {
             originalUserData = snapshot.data();
             const userData = snapshot.data();
-            userData.birthday = dateFormatting(userData);
+            userData.birthday = dateFormatting(userData.birthday?.toDate());
             setUser(userData);
         }
     ).catch((error) => {

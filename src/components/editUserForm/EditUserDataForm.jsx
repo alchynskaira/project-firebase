@@ -8,7 +8,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-import {dateFormatting} from "../helpers/DateFotmatting/DateFormatting";
+import {dateFormatting} from "../helpers/dateFotmatting/dateFormatting";
 
 
 const useStyles = makeStyles((theme) =>
@@ -32,15 +32,10 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-
-
 export function EditUserDataForm({onClose, user}) {
-    // const date = user.birthday.toDate();
-     const dateForDisplaying  = dateFormatting(user);
-    // = ("0" + date.getDate()).slice(-2) + "." +
-    //     ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     const classes = useStyles();
     const { showAlert } = useAlertContext();
+    const [dateForDisplaying, setDateForDisplaying] = useState(dateFormatting(user.birthday?.toDate()))
     const [userUpdateData, setUserUpdateData] = useState(user);
     const [errors, setErrors] = useState({
         name: {
@@ -63,7 +58,12 @@ export function EditUserDataForm({onClose, user}) {
             ...userUpdateData,
             [key]: value
         })
-        console.log(key, value)
+        if (key === "birthday") {
+            console.log(dateFormatting(value))
+            setDateForDisplaying(dateFormatting(value));
+            console.log(dateForDisplaying, "2");
+        }
+
     }
 
 
