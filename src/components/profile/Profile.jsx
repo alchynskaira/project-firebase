@@ -11,6 +11,7 @@ import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
+import {dateFormatting} from "../helpers/DateFotmatting/DateFormatting";
 
 
 
@@ -87,9 +88,10 @@ const useStyles = makeStyles((theme) =>
         }
     })
 );
-
+let originalUserData = null;
 export default function UserCard() {
     const classes = useStyles();
+
     const { showAlert } = useAlertContext();
     const [user, setUser] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
@@ -97,14 +99,12 @@ export default function UserCard() {
 
 
     const getUserData = () => {
-    const userData = JSON.parse(localStorage.getItem( "userData"));
+    const userDataFromLocalstorage = JSON.parse(localStorage.getItem( "userData"));
 
-    db.collection('user').doc(userData.uid).get().then(snapshot => {
-
+    db.collection('user').doc(userDataFromLocalstorage.uid).get().then(snapshot => {
+            originalUserData = snapshot.data();
             const userData = snapshot.data();
-            const date = userData.birthday.toDate()
-            userData.birthday = ("0" + date.getDate()).slice(-2) + "." +
-                ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+            userData.birthday = dateFormatting(userData);
             setUser(userData);
         }
     ).catch((error) => {
@@ -127,7 +127,7 @@ export default function UserCard() {
     return (
         <div>
             <AlertMessage/>
-            { modalOpen && <Modal onClose={onModalClose} user={user}/> }
+            { modalOpen && <Modal onClose={onModalClose} user={originalUserData}/> }
                     <Card className={classes.card} sx={{maxWidth: 600, maxHeight: 800}} key={user?.id}>
                         <div className={classes.content}>
                         <CardHeader className={classes.cardHeader}

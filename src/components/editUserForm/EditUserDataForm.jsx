@@ -8,7 +8,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-
+import {dateFormatting} from "../helpers/DateFotmatting/DateFormatting";
 
 
 const useStyles = makeStyles((theme) =>
@@ -35,23 +35,12 @@ const useStyles = makeStyles((theme) =>
 
 
 export function EditUserDataForm({onClose, user}) {
-    console.log(user, "user");
+    // const date = user.birthday.toDate();
+     const dateForDisplaying  = dateFormatting(user);
+    // = ("0" + date.getDate()).slice(-2) + "." +
+    //     ("0" + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     const classes = useStyles();
     const { showAlert } = useAlertContext();
-    if(typeof(user.birthday) === "string") {
-        let day = user.birthday;
-        day = day.split(".")[0];
-        let month = user.birthday;
-        month = month.split(".")[1];
-        let year = user.birthday;
-        year = year.split(".")[2];
-        const fixedDate = new Date(Date.UTC(parseInt(year), parseInt(month), parseInt(day)));
-        user.birthday =fixedDate;
-        console.log(day, month, year);
-    }
-
-
-    console.log(user);
     const [userUpdateData, setUserUpdateData] = useState(user);
     const [errors, setErrors] = useState({
         name: {
@@ -75,7 +64,6 @@ export function EditUserDataForm({onClose, user}) {
             [key]: value
         })
         console.log(key, value)
-          console.log(userUpdateData);
     }
 
 
@@ -133,9 +121,9 @@ export function EditUserDataForm({onClose, user}) {
                                     <DatePicker
                                         views={["year", "month", "day"]}
                                         format={'DD/MM/YYYY'}
-                                        value={userUpdateData.birthday}
+                                        value={dateForDisplaying}
                                         KeyboardButtonProps={{"aria-label": "change date"}}
-                                        onChange={(birthday) => setFormData("birthday", birthday)}
+                                        onChange={(data) => setFormData("birthday", data)}
                                         renderInput={(params) =>
                                             <TextField type="date" {...params} className={classes.formDateReg}/>}
                                       />
