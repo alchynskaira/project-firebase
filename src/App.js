@@ -10,8 +10,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { saveUser } from "./helpers/saveUser";
 import ProfilePage from "./pages/Profile";
 import { AlertContextProvider } from "./helpers/alertContextProvider";
-
-
+import './index.css';
 
 function App() {
   let navigate = useNavigate();
@@ -33,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <AlertContextProvider>
-        <Container>
+        <Container className="container-app">
           <NavBar />
           <Routes>
             <Route path="login" element={<LoginPage />} />
