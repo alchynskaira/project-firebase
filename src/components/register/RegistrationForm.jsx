@@ -12,12 +12,32 @@ import  "./Registration.css";
 import {saveUser} from "../../helpers/saveUser";
 import AlertMessage from "../alert/AlertMessage";
 import {useAlertContext} from "../../helpers/alertContextProvider";
-
-
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
 let pass = "";
 
+const useStyles = makeStyles((theme) =>
+    createStyles({
+       registerLabel: {
+           marginBottom:"5px",
+       },
+        formControlReg: {
+            marginTop: "5px",
+            marginBottom: "5px"
+        },
+        formGroupReg: {
+           marginBottom: "10px",
+        },
+        formDateReg: {
+            width: "100%",
+            height: "50px",
+            marginBottom: "10px",
+            marginTop: "10px"
+        }
+    })
+);
 export function RegistrationForm() {
+    const classes = useStyles();
   const navigate = useNavigate();
   const { showAlert } = useAlertContext();
   const [emailValue, setEmailValue] = useState( "");
@@ -25,8 +45,6 @@ export function RegistrationForm() {
   const [confirmValue, setConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [professionValue, setProfessionValue] = useState("");
-
-  const [success, setSuccess] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({
 
@@ -85,12 +103,10 @@ export function RegistrationForm() {
                     name: nameValue,
                     birthday: selectedDate,
                     profession: professionValue,
-                    todos: todos
                 })
             }).then((user)=>  {
             saveUser(user);
             showAlert('success', 'You are successfully registered');
-            setSuccess(true);
         }).catch((error) => {
             console.error("Registration error: ", error);
         });
@@ -120,11 +136,11 @@ export function RegistrationForm() {
                 >
                     <h2 className="title">Sign up</h2>
                     <div className="flex">
-                        <div className="form-group">
-                            <label className="register-label">Email
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}>Email
                             <TextField fullWidth
                                        type="email"
-                                       className="form-control"
+                                       className={classes.formControlReg}
                                        id="inputEmail"
                                        aria-describedby="emailHelp"
                                        placeholder="Enter email"
@@ -135,12 +151,12 @@ export function RegistrationForm() {
                             </label>
                         </div>
                         {!errors.email.valid &&   <p className="error-log">{errors.email.text}</p>}
-                        <div className="form-group">
-                            <label className="register-label">Password
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}>Password
                             <TextField fullWidth
                                        type="password"
                                        autoComplete="new-password"
-                                       className="form-control"
+                                       className={classes.formControlReg}
                                        id="inputPassword"
                                        placeholder="Enter Password"
                                        value={passwordValue}
@@ -149,13 +165,13 @@ export function RegistrationForm() {
                             />
                             </label>
                         </div>
-                        <div className="form-group">
-                            <label className="register-label">Confirm Password
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}>Confirm Password
                                 <TextField fullWidth
                                            name="passwordConfirm"
                                            type="password"
                                            autoComplete="new-password"
-                                           className="form-control"
+                                           className={classes.formControlReg}
                                            id="confirm_password"
                                            placeholder="Enter Password"
                                            value={confirmValue}
@@ -165,13 +181,13 @@ export function RegistrationForm() {
                             </label>
                         </div>
                         { !passErrors.confirmPassword.valid &&  <p className="error-log">{passErrors.confirmPassword.text}</p>}
-                        <div className="form-group">
-                            <label className="register-label"> User name
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}> User name
                                 <TextField fullWidth
                                            name="name"
                                            type="text"
                                            autoComplete="off"
-                                           className="form-control"
+                                           className={classes.formControlReg}
                                            id="name"
                                            placeholder="Enter your user name"
                                            value={nameValue}
@@ -180,8 +196,8 @@ export function RegistrationForm() {
                                 />
                             </label>
                         </div>
-                        <div className="form-group">
-                            <label className="register-label">Birthday
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}>Birthday
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         views={["year", "month", "day"]}
@@ -192,19 +208,18 @@ export function RegistrationForm() {
                                     onChange={(selectedData)=> setSelectedDate(selectedData)
                                 }
                                     renderInput={(params) =>
-                                    <TextField type="date" {...params} className= "date-input"   />}
+                                    <TextField type="date" {...params}  className={classes.formDateReg}  />}
                                     />
                                     </LocalizationProvider>
                             </label>
-
                         </div>
-                        <div className="form-group">
-                            <label className="register-label">Profession
+                        <div className={classes.formGroupReg}>
+                            <label className={classes.registerLabel}>Profession
                                 <TextField fullWidth
                                            name="profession"
                                            type="text"
                                            autoComplete="off"
-                                           className="form-control"
+                                           className={classes.formControlReg}
                                            id="profession"
                                            placeholder="Enter Profession"
                                            value={professionValue}

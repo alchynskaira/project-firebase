@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {createPortal} from "react-dom";
 import {EditUserDataForm} from "../editUserForm/EditUserDataForm";
 import "./Modal.css";
@@ -8,7 +8,7 @@ import {Button} from "@mui/material";
 
 const modalRoot = document.querySelector("#modal-root");
 
-export default function Modal ({onClose}) {
+export default function Modal ({onClose, user}) {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -33,7 +33,7 @@ export default function Modal ({onClose}) {
            <div className="modal-content">
                <Button   type="button" className="button-close" onClick={() => onClose(false)}>x
                </Button>
-               <EditUserDataForm onClose={onClose}/>
+               <EditUserDataForm onClose={onClose} user={user}/>
            </div>
        </div>,
        modalRoot

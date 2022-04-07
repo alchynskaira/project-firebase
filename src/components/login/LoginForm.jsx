@@ -8,10 +8,27 @@ import {saveUser} from "../../helpers/saveUser";
 import AlertMessage from "../alert/AlertMessage";
 import { useAlertContext } from "../../helpers/alertContextProvider";
 import "./Login.css";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
+
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        loginLabel: {
+            marginBottom:"5px",
+        },
+        formControlLog: {
+            marginTop: "5px",
+            marginBottom: "5px"
+        },
+        formGroupLog: {
+            marginBottom: "10px",
+        },
+    })
+);
 
 
 export function LoginForm() {
+    const classes = useStyles();
     let navigate = useNavigate();
     const { showAlert } = useAlertContext();
     const [emailInput, setEmailInput] = useState("");
@@ -78,11 +95,11 @@ export function LoginForm() {
                 >
                     <h2 className="title">Log in</h2>
                     <div className="flex">
-                        <div className="form-group">
-                            <label className="login-label">Email
+                        <div className={classes.formGroupLog}>
+                            <label className={classes.loginLabel}>Email
                                 <TextField fullWidth
                                            type="email"
-                                           className="form-control"
+                                           className={classes.formControlLog}
                                            id="inputEmail"
                                            aria-describedby="emailHelp"
                                            placeholder="Enter email"
@@ -93,12 +110,12 @@ export function LoginForm() {
                             </label>
                         </div>
                         {!errors.email.valid && <p className="error-log">{errors.email.text}</p>}
-                        <div className="form-group">
-                            <label className="login-label">Password
+                        <div className={classes.formGroupLog}>
+                            <label className={classes.loginLabel}>Password
                                 <TextField fullWidth
                                            type="password"
                                            autoComplete="new-password"
-                                           className="form-control"
+                                           className={classes.formControlLog}
                                            id="inputPassword"
                                            placeholder="Enter Password"
                                            value={passwordInput}
@@ -118,7 +135,6 @@ export function LoginForm() {
                                 navigate('/register')
                             }}>
                                 Sign up
-                                {/*< PersonIcon className="user-icon"/>*/}
                             </a>
                         </div>
                     </div>
