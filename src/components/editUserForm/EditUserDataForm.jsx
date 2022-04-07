@@ -8,7 +8,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-import {dateFormatting} from "../helpers/dateFotmatting/dateFormatting";
+import {dateFormatting} from "../../helpers/dateFormatting";
 
 
 const useStyles = makeStyles((theme) =>

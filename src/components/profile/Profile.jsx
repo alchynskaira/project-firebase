@@ -11,7 +11,7 @@ import Modal from "../modal/Modal";
 import {db} from "../../firebaseConfig";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
-import {dateFormatting} from "../helpers/dateFotmatting/dateFormatting";
+import {dateFormatting} from "../../helpers/dateFormatting";
 
 
 
