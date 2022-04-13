@@ -1,25 +1,52 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './WeatherWidget.css'
 
 const WeatherWidget =() => {
-
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&q=${location}&units=metric&appid=b5a96753573b7cb6a06406d22c88b980`
+  const url1 = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&q=${location}&units=metric&appid=b5a96753573b7cb6a06406d22c88b980`
+  const url2 = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=b5a96753573b7cb6a06406d22c88b980`
 
-  const searchLocation = (e) => {
-    if(e.key === 'Enter') {
-      axios.get(url).then((res) => {
-        setData(res.data);
-        console.log(res.data);
-      })
-      setLocation('');
+  const savePositionToState = (position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  }
+
+  const searchLocation = async (e) => {
+    try {
+      if(e.key === 'Enter') {
+        await  axios.get(url1).then((res) => {
+          setData(res.data);
+          console.log(res.data);
+        })
+          setLocation('');
+      }
+    } catch (err){
+          console.log(err);
     }
+
 
   }
 
+  const fetchWeather = async () => {
+   await window.navigator.geolocation.getCurrentPosition(savePositionToState);
+    try {
+      await axios.get(url2).then((res) => {
+        setData(res.data);
+      })
+
+    } catch (err) {
+        console.log(err);
+    }
+  }
+
+useEffect(()=> {
+  fetchWeather();
+}, [])
 
   return (
     <div className="weather-container">
@@ -29,7 +56,7 @@ const WeatherWidget =() => {
              onChange={e => setLocation(e.target.value)}
                onKeyPress={searchLocation}
       />
-        <button className="current-location-btn">Current weather</button>
+        <button className="current-location-btn" onClick={fetchWeather}>Current weather</button>
       </div>
       <div className="weather-box">
 <div className="top">
