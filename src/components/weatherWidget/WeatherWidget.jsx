@@ -5,21 +5,28 @@ import './WeatherWidget.css'
 const WeatherWidget =() => {
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
 
-  const url1 = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&q=${location}&units=metric&appid=b5a96753573b7cb6a06406d22c88b980`
-  const url2 = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=b5a96753573b7cb6a06406d22c88b980`
+  const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
+  const appId = 'units=metric&appid=b5a96753573b7cb6a06406d22c88b980'
+  const urlLocation = `${baseUrl}&q=${location}&${appId}`
+
 
   const savePositionToState = (position) => {
-    setLatitude(position.coords.latitude);
-    setLongitude(position.coords.longitude);
+    fetchWeather(position.coords.latitude, position.coords.longitude);
+  }
+
+  const generateUrl = (latitude, longitude) => {
+    return `${baseUrl}lat=${latitude}&lon=${longitude}&${appId}`
+  }
+
+  const handleGeolocation = () => {
+    window.navigator.geolocation.getCurrentPosition(savePositionToState);
   }
 
   const searchLocation = async (e) => {
     try {
       if(e.key === 'Enter') {
-        await  axios.get(url1).then((res) => {
+        await  axios.get(urlLocation).then((res) => {
           setData(res.data);
           console.log(res.data);
         })
@@ -28,14 +35,11 @@ const WeatherWidget =() => {
     } catch (err){
           console.log(err);
     }
-
-
   }
 
-  const fetchWeather = async () => {
-   await window.navigator.geolocation.getCurrentPosition(savePositionToState);
+  const fetchWeather = (lat, long) => {
     try {
-      await axios.get(url2).then((res) => {
+       axios.get(generateUrl(lat, long)).then((res) => {
         setData(res.data);
       })
 
@@ -45,7 +49,8 @@ const WeatherWidget =() => {
   }
 
 useEffect(()=> {
-  fetchWeather();
+  handleGeolocation();
+
 }, [])
 
   return (
@@ -56,7 +61,7 @@ useEffect(()=> {
              onChange={e => setLocation(e.target.value)}
                onKeyPress={searchLocation}
       />
-        <button className="current-location-btn" onClick={fetchWeather}>Current weather</button>
+        <button className="current-location-btn" onClick={handleGeolocation}>Current weather</button>
       </div>
       <div className="weather-box">
 <div className="top">
