@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AlertMessage from "../alert/AlertMessage";
+import {API_KEY} from "../../config";
 import './WeatherWidget.css'
+import { useAlertContext } from "../../helpers/alertContextProvider";
 
 const WeatherWidget =() => {
+  const { showAlert } = useAlertContext();
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
 
-  const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?'
-  const appId = 'units=metric&appid=b5a96753573b7cb6a06406d22c88b980'
-  const urlLocation = `${baseUrl}&q=${location}&${appId}`
+  const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&'
+  const urlLocation = `${baseUrl}&q=${location}&${API_KEY}`
 
 
   const savePositionToState = (position) => {
@@ -16,7 +19,7 @@ const WeatherWidget =() => {
   }
 
   const generateUrl = (latitude, longitude) => {
-    return `${baseUrl}lat=${latitude}&lon=${longitude}&${appId}`
+    return `${baseUrl}lat=${latitude}&lon=${longitude}&appId=${API_KEY}`
   }
 
   const handleGeolocation = () => {
@@ -28,33 +31,34 @@ const WeatherWidget =() => {
       if(e.key === 'Enter') {
         await  axios.get(urlLocation).then((res) => {
           setData(res.data);
-          console.log(res.data);
         })
           setLocation('');
       }
     } catch (err){
+          showAlert('error', 'Something went wrong, try again later!');
           console.log(err);
     }
   }
 
-  const fetchWeather = (lat, long) => {
+  const fetchWeather = async (lat, long) => {
     try {
-       axios.get(generateUrl(lat, long)).then((res) => {
+     await  axios.get(generateUrl(lat, long)).then((res) => {
         setData(res.data);
       })
 
     } catch (err) {
+        showAlert('error', 'Something went wrong, try again later!');
         console.log(err);
     }
   }
 
 useEffect(()=> {
   handleGeolocation();
-
 }, [])
 
   return (
     <div className="weather-container">
+      <AlertMessage/>
       <div className="head-box" >
       <input type="text" placeholder="Enter location"
              value={location}
@@ -69,31 +73,29 @@ useEffect(()=> {
        <p>{data.name}</p>
    </div>
     <div className="temp">
-      {data.main ? <h1>{data.main.temp.toFixed()}°C</h1> : null}
+       <h1>{data.main?.temp.toFixed()}°C</h1>
 
     </div>
     <div className="description">
-      {data.weather ?  <p>{data.weather[0].main}</p> : null}
+      {data.hasOwnProperty("weather") && data.weather.length > 0 ?  <p>{data.weather[0].main}</p> : null}
 
     </div>
 </div>
-        {data.name != undefined &&
+
           <div className="bottom">
             <div className="feels about">
-              {data.main ? <p className="bold">{data.main.feels_like.toFixed()}°C</p> : null}
+             <p className="bold">{data.main?.feels_like.toFixed()}°C</p>
               <p>Feels like</p>
             </div>
             <div className="humidity about">
-              {data.main ? <p className="bold">{data.main.humidity}%</p> : null}
+               <p className="bold">{data.main?.humidity}%</p>
               <p>Humidity</p>
             </div>
             <div className="wind about">
-              {data.wind ? <p className="bold">{data.wind.speed}m/s</p> : null}
+              <p className="bold">{data.wind?.speed}m/s</p>
               <p>Wind Speed</p>
             </div>
           </div>
-
-        }
 
       </div>
     </div>

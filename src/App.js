@@ -20,7 +20,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         saveUser(user);
-
+        navigate("/home");
       } else {
         navigate("/register");
         console.log("user is not logged in");

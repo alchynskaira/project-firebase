@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter} from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import {firebaseConfig} from "./firebaseConfig";
+import {config} from "./config";
 
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
@@ -11,7 +11,7 @@ import { StyledEngineProvider } from "@mui/material/styles";
 
 
 
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(config);
 export const auth = getAuth(app);
 
 ReactDOM.render(

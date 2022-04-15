@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@mui/material";
-import {db} from "../../firebaseConfig";
+import {db} from "../../config";
 import "./EditUserDataForm.css";
 import AlertMessage from "../alert/AlertMessage";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";

@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Modal from "../modal/Modal";
-import {db} from "../../firebaseConfig";
+import {db} from "../../config";
 import {useAlertContext} from "../../helpers/alertContextProvider";
 import AlertMessage from "../alert/AlertMessage";
 import {dateFormatting} from "../../helpers/dateFormatting";

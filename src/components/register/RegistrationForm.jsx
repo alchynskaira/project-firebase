@@ -6,7 +6,7 @@ import {auth} from "../../index";
    import AdapterDateFns from '@mui/lab/AdapterDateFns';
    import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import {db} from "../../firebaseConfig";
+import {db} from "../../config";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import  "./Registration.css";
 import {saveUser} from "../../helpers/saveUser";
